@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { SocialIcon } from "@/components/brand/SocialIcon";
 import { nav, site } from "@/lib/content";
+import { navHref } from "@/lib/nav";
 import { useMotion } from "@/components/motion/MotionProvider";
 
 /**
@@ -172,14 +173,14 @@ export function Header() {
   }, []);
 
   /**
-   * The nav points at sections of the homepage, so every link is one of two
-   * things depending on where the visitor is standing: a scroll, or a trip
-   * home. `onHome` decides that once, and the hrefs below carry it — which
-   * also means the links are real, crawlable URLs on a case page rather than
-   * hashes that resolve to nothing.
+   * Half the nav points at sections of the homepage and half at pages of their
+   * own, so a link is one of three things depending on where the visitor is
+   * standing: a scroll, a trip home, or a plain navigation. `onHome` decides
+   * that once and `navHref` applies it — which also means the links are real,
+   * crawlable URLs on a case page rather than hashes that resolve to nothing.
    */
   const onHome = pathname === "/";
-  const to = (hash: string) => (onHome ? hash : `/${hash}`);
+  const to = (href: string) => navHref(href, onHome);
 
   // Not curried: a factory called from JSX reads as a render-time ref access.
   const jump = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -195,7 +196,11 @@ export function Header() {
     e.preventDefault();
     requestAnimationFrame(() => {
       const lenis = lenisRef.current;
-      if (lenis) lenis.scrollTo(el as HTMLElement, { offset: -80 });
+      // No offset argument: `section[id] { scroll-margin-top }` in globals.css
+      // is the single source of truth for clearing the fixed header, and both
+      // Lenis and the native path honour it. Passing -80 here as well landed
+      // this one route 160px high while every other way in landed at 80.
+      if (lenis) lenis.scrollTo(el as HTMLElement);
       else el.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   };
@@ -227,7 +232,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href={to("#contact")} onClick={jump} className="pill-outline hidden sm:inline-flex">
+          <Link href="/contact" className="pill-outline hidden sm:inline-flex">
             Let&apos;s talk
           </Link>
 
@@ -276,7 +281,7 @@ export function Header() {
           </ul>
 
           <div className="nav-sheet__foot" style={{ "--i": nav.length } as React.CSSProperties}>
-            <Link href={to("#contact")} onClick={jump} className="btn-grad w-full justify-center !px-6">
+            <Link href="/contact" onClick={closeMenu} className="btn-grad w-full justify-center !px-6">
               Start jouw project
             </Link>
             <div className="mt-6 flex flex-wrap items-end justify-between gap-x-8 gap-y-5">

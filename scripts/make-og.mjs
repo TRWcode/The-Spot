@@ -14,16 +14,41 @@
  * Run: node scripts/make-og.mjs
  */
 
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import sharp from "sharp";
+
+const run = promisify(execFile);
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const W = 1200;
 const H = 630;
 
-const frame = await sharp(path.join(ROOT, "public/media/posters/hero.jpg"))
-  .resize(W, H, { fit: "cover", position: "attention" })
+/**
+ * Cut from the loop, at a second chosen for this job — not from hero.jpg.
+ *
+ * The hero's poster has to be the loop's own first frame or the picture jumps
+ * when playback starts, and this edit opens on a night exterior. That is the
+ * right call for the hero and the wrong one for a share card: as a WhatsApp or
+ * LinkedIn preview it was a black rectangle with a logo in the corner.
+ *
+ * 12.6s is the showroom: a person, a business, warm interior light, and a dark
+ * left third that the scrim and the mark were already designed to sit on.
+ */
+const OG_AT = "12.6";
+const SOURCE = path.join(ROOT, "public/media/clips/hero-loop.mp4");
+
+const still = path.join(os.tmpdir(), "the-spot-og-frame.jpg");
+await run("ffmpeg", ["-y", "-v", "error", "-ss", OG_AT, "-i", SOURCE, "-frames:v", "1", "-q:v", "2", still]);
+
+const frame = await sharp(still)
+  // `cover` with a fixed centre, not `position: "attention"`: the frame is
+  // chosen deliberately above, and letting sharp hunt for the busiest region
+  // means the crop moves every time the film is re-cut.
+  .resize(W, H, { fit: "cover" })
   .toBuffer();
 
 // Matches .hero-scrim: heavy on the left where the mark sits, clear on the

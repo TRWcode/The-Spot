@@ -21,11 +21,17 @@ export const site = {
   ],
 } as const;
 
+/**
+ * Two kinds of destination in one list: a `#hash` is a section of the
+ * homepage, a `/path` is a page of its own. Everything that renders this list
+ * runs the href through `navHref()` in lib/nav.ts, which is what makes the
+ * hashes work from a case page as well as from the homepage.
+ */
 export const nav = [
   { label: "Werk", href: "#werk" },
   { label: "Diensten", href: "#diensten" },
-  { label: "Over", href: "#waarom" },
-  { label: "Contact", href: "#contact" },
+  { label: "Over", href: "/over-ons" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const hero = {
@@ -230,6 +236,87 @@ export const testimonial = {
     "Geweldig geholpen aan vette foto's en een gave aftermovie met drone-beelden. Alles liep vlekkeloos.",
   name: "Pleunie Groen",
   source: "Review via Google",
+} as const;
+
+/**
+ * /contact. The homepage keeps its own shorter invitation (`contact` below);
+ * this is the page someone lands on when they have already decided to write.
+ */
+export const contactPage = {
+  eyebrow: "Contact",
+  title: "Vertel wat je voor ogen hebt.",
+  lead: "Een idee, een deadline of alleen een vraag — het mag allemaal kort. Je krijgt binnen één werkdag antwoord van iemand die de productie ook echt draait.",
+  /** Set against the promise in `lead`: what happens after the send button. */
+  steps: [
+    {
+      title: "Je krijgt binnen één werkdag antwoord",
+      body: "Geen automatische bevestiging, maar een echt bericht van Beer.",
+    },
+    {
+      title: "We bellen of drinken koffie",
+      body: "Twintig minuten is meestal genoeg om te weten of het klikt en wat het ongeveer kost.",
+    },
+    {
+      title: "Je krijgt een voorstel op maat",
+      body: "Concept, planning en prijs op één pagina. Geen offertemolen.",
+    },
+  ],
+  /** Sits under the details block; the studio is a real place you can visit. */
+  studioNote: "Studio in Haarlem. Draaien doen we door heel Nederland.",
+} as const;
+
+/**
+ * /over-ons.
+ *
+ * Adapted from The SPOT's own existing about copy rather than written fresh —
+ * the claims are theirs, only the voice is brought in line with the rest of
+ * this site. Nothing here asserts a fact (team size, years, awards) that the
+ * client has not already published about themselves.
+ */
+export const about = {
+  eyebrow: "Over ons",
+  title: "Gemaakt om impact te maken.",
+  lead: "Wij maken video en fotografie op maat: beeld dat je merk versterkt, je verhaal vertelt en blijft hangen. Geen standaard formats, geen bestelling afleveren.",
+  /**
+   * Portrait. Drop the file at public/media/about/team.jpg and it appears —
+   * until then the page shows a branded panel in its place, so there is never
+   * a broken image on a live site. See app/over-ons/page.tsx.
+   */
+  portrait: {
+    src: "/media/about/team.jpg",
+    alt: "Het team van The SPOT",
+  },
+  story: {
+    title: "Creatie, groei en ondernemerschap",
+    body: [
+      "Sterke content doet meer dan opvallen. Het vertelt jouw verhaal, versterkt je merk en laat een blijvende indruk achter. Daarom beginnen we nooit bij de camera, maar bij wat je wilt bereiken — bij jouw visie, je doelgroep en je doel.",
+      "Vanuit Haarlem draaien we door het hele land: bedrijfsfilms, aftermovies, commercials, portretten en social content. Concept, opname, montage, kleur en muziek zitten onder één dak, dus je hebt één aanspreekpunt en geen partijen die naar elkaar wijzen.",
+    ],
+  },
+  /** Condensed from the wel/niet section, so the two never contradict. */
+  values: [
+    {
+      title: "Kwaliteit die opvalt",
+      body: "Beeld dat je twee keer laat kijken — en dat naast de grote merken kan staan.",
+    },
+    {
+      title: "Korte lijnen",
+      body: "Vandaag bellen kan morgen draaien betekenen. Geen ruis, geen tussenlagen.",
+    },
+    {
+      title: "Fris maar ervaren",
+      body: "De energie van een nieuw merk, de rust van honderden producties.",
+    },
+    {
+      title: "Meedenken als partner",
+      body: "We leveren geen bestelling af, we bouwen mee aan wat je wilt bereiken.",
+    },
+  ],
+  cta: {
+    title: "Benieuwd wat we voor je kunnen maken?",
+    body: "Vertel kort wat er speelt. Je hoort binnen één werkdag van ons.",
+    label: "Start jouw project",
+  },
 } as const;
 
 export const contact = {

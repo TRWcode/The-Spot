@@ -90,6 +90,20 @@
     text-wrap: balance;
   }
 
+  /**
+   * Anchor targets clear the fixed header.
+   *
+   * The header's own nav applies this offset itself when it scrolls within a
+   * page, but a hash that arrives any other way — a link from a case page, a
+   * pasted /#diensten, the back button — is scrolled by the browser, which
+   * knows nothing about a 72px bar floating over the document and parks the
+   * section flush underneath it. One declaration covers every one of those
+   * routes; see the matching offset in Header's `jump`.
+   */
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+
   /* Lenis */
   html.lenis,
   html.lenis body {
@@ -361,6 +375,48 @@
     letter-spacing: -0.03em;
     line-height: 1;
   }
+  /* --- Over ons ------------------------------------------------------ */
+
+  /**
+   * The portrait holds its shape whether or not the photograph exists yet, so
+   * the page does not reflow the day the file lands. 4:5 because this is a
+   * picture of people — a landscape crop of a portrait is the tell of a
+   * layout that was designed around a stock image.
+   */
+  .about-portrait {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+  }
+  .about-portrait__placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(120% 90% at 30% 20%, rgb(26 235 216 / 0.1), transparent 60%),
+      radial-gradient(120% 90% at 80% 90%, rgb(10 120 236 / 0.12), transparent 60%);
+  }
+
+  /* Step numerals on /contact. Same numeral language as the mobile menu, but
+     gradient-filled: these are the one ordered sequence on the page, and the
+     gradient is what the brand uses to mark a beginning. */
+  .contact-step__index {
+    flex: none;
+    padding-top: 2px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   .nav-sheet__index {
     font-family: var(--font-sans);
     font-size: 12px;

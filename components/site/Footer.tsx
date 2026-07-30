@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { SocialIcon } from "@/components/brand/SocialIcon";
 import { legal, nav, site } from "@/lib/content";
+import { navHref } from "@/lib/nav";
 import { ScrollTop } from "@/components/site/ScrollTop";
 
 export function Footer() {
@@ -23,14 +24,14 @@ export function Footer() {
             {/* Rows rather than a gap-spaced list: the padding is what makes
                 each link a 44px tap target on a phone. */}
             <ul className="flex flex-col">
-              {/* Absolute, not bare hashes: this footer also renders under the
-                  case pages and the legal pages, where "#werk" resolves to
-                  nothing at all. A Link keeps the same-page case a scroll
-                  rather than a reload. */}
+              {/* Always resolved as if standing off the homepage: this footer
+                  also renders under the case pages and the legal pages, where
+                  "#werk" resolves to nothing at all. A Link keeps the
+                  same-page case a scroll rather than a reload. */}
               {nav.map((item) => (
                 <li key={item.href}>
                   <Link
-                    href={`/${item.href}`}
+                    href={navHref(item.href, false)}
                     className="flex min-h-[44px] items-center text-[15px] hover:text-blue"
                   >
                     {item.label}
