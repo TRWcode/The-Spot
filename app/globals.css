@@ -1,0 +1,1781 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   The SPOT — design tokens
+   Gradient is an ACCENT, never a theme. Allowed surfaces only:
+   play-marks, cursor, active nav underline, scroll progress, CTA fill,
+   section hairlines, and one keyword per hero headline.
+------------------------------------------------------------------ */
+
+@theme {
+  /* Brand gradient — sampled from the S-mark */
+  --color-teal: #1aebd8;
+  --color-cyan: #15c6d8;
+  --color-blue: #0a78ec;
+  --color-blue-deep: #056de9;
+
+  /* Neutral */
+  --color-ink: #0b0f14;
+  --color-ink-2: #59636f;
+  --color-line: #e8ecf0;
+  --color-canvas: #f6f8fa;
+  --color-paper: #ffffff;
+
+  /* Type */
+  --font-display: var(--font-general-sans), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-switzer), "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid scale */
+  --text-h1: clamp(44px, 8.2vw, 104px);
+  --text-h2: clamp(30px, 4.6vw, 54px);
+  --text-h3: clamp(22px, 2.4vw, 30px);
+  --text-lead: clamp(16px, 1.7vw, 20px);
+
+  /* Radii */
+  --radius-tile: 20px;
+  --radius-card: 18px;
+  --radius-chip: 10px;
+
+  /* Motion */
+  --ease-brand: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Shadows — the only glow lives on the gradient CTA */
+  --shadow-cta: 0 18px 40px -14px rgb(10 120 236 / 0.55);
+  --shadow-tile: 0 1px 2px rgb(11 15 20 / 0.04), 0 12px 32px -18px rgb(11 15 20 / 0.18);
+}
+
+:root {
+  /* The brand gradient, straight off the S-mark. This is the look — it stays.
+     Noted for the record: white text on the teal end measures 1.5:1 and on
+     the blue end 4.3:1, both under the 4.5:1 WCAG AA wants for body text.
+     Kept deliberately; brand comes first here. */
+  --grad: linear-gradient(115deg, #1aebd8 0%, #15c6d8 42%, #0a78ec 100%);
+  --shell: 1240px;
+  --section-y: clamp(96px, 12vw, 180px);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-teal);
+    color: var(--color-ink);
+  }
+
+  /* Keyboard focus = gradient-blue ring. Never remove without replacing. */
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    text-wrap: balance;
+  }
+
+  /* Lenis */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    padding-inline: clamp(20px, 5vw, 40px);
+  }
+
+  .section-y {
+    padding-block: var(--section-y);
+  }
+
+  /* The bento is dense by nature — full section padding around it left the
+     cases feeling adrift between two oceans of white. */
+  .section-y-tight {
+    padding-block: clamp(72px, 8.5vw, 124px);
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    font-weight: 500;
+  }
+
+  .lead {
+    font-size: var(--text-lead);
+    line-height: 1.5;
+    color: var(--color-ink-2);
+  }
+
+  /* The one place large text may carry the gradient: a single hero keyword. */
+  .grad-text {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .grad-fill {
+    background: var(--grad);
+  }
+
+  /* Section divider — gradient as a hairline, never as a field. */
+  .grad-rule {
+    height: 1px;
+    width: 100%;
+    background: var(--grad);
+    opacity: 0.55;
+  }
+
+  /* Masked line reveal: wrapper clips, inner span translates. */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+  }
+  .line-mask > span {
+    display: block;
+    will-change: transform;
+  }
+
+  /* --- Header / buttons -------------------------------------------- */
+
+  /* Over the dark hero everything inverts. Scoped to one attribute so the
+     header has a single source of truth for which surface it is sitting on. */
+  .site-header[data-on-dark="true"] {
+    color: #fff;
+  }
+  .site-header[data-on-dark="true"] .nav-link,
+  .site-header[data-on-dark="true"] .pill-outline {
+    color: #fff;
+  }
+  .site-header[data-on-dark="true"] .burger > span {
+    background: #fff;
+  }
+
+  /* The visual hairline sits at the text, but the row is padded out to a
+     44px hit area — 768px is a tablet, where these are tapped, not clicked. */
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    /* Under the text rather than under the padded hit area. */
+    bottom: calc(50% - 0.9em);
+    height: 2px;
+    width: 100%;
+    background: var(--grad);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-brand);
+  }
+  .nav-link:hover::after,
+  .nav-link[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  /* Gradient ring with a transparent interior, so it sits on any surface. */
+  .pill-outline {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border-radius: 9999px;
+    padding: 9px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-ink);
+    transition: color 0.25s var(--ease-brand);
+  }
+  .pill-outline::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: var(--grad);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Two bars that cross into an X when open. 44px is the tap-target floor —
+     the glyph inside stays 18px, only the hit area grows. */
+  .burger {
+    position: relative;
+    display: grid;
+    place-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+  }
+  .burger > span {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: var(--color-ink);
+    transition: transform 0.3s var(--ease-brand);
+  }
+  .burger[data-open="true"] > span:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+  .burger[data-open="true"] > span:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  /* --- Mobile nav sheet ----------------------------------------------
+     Full-screen, but it opens from under the header bar so the wordmark and
+     the burger never move — the sheet arrives around them.
+
+     Everything animates on opacity/transform only. `visibility` is what takes
+     it out of hit-testing, and it is transitioned rather than switched so the
+     closing animation has time to finish before the panel stops painting. ---- */
+
+  .nav-sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    /* Not 100vh: mobile browsers count the collapsing toolbar in vh, which
+       would push the CTA below the fold on exactly the devices this is for. */
+    height: 100svh;
+    background: var(--color-paper);
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.32s var(--ease-brand),
+      visibility 0s linear 0.32s;
+  }
+  .nav-sheet[data-open="true"] {
+    visibility: visible;
+    opacity: 1;
+    transition:
+      opacity 0.28s var(--ease-brand),
+      visibility 0s;
+  }
+
+  .nav-sheet__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    /* Clears the 72px header bar the sheet opens beneath. */
+    padding: calc(72px + clamp(24px, 6vh, 56px)) clamp(20px, 5vw, 40px) clamp(28px, 5vh, 48px);
+    /* A short phone in landscape cannot fit this; let it scroll rather than
+       clip the CTA off the bottom. */
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Auto margins centre the links in whatever space the CTA block leaves. On a
+     tall phone `space-between` alone parked them under the header with a third
+     of the screen empty below; on a short one the margins collapse to nothing
+     and the sheet just scrolls. */
+  /* Direct children only — the sheet's footer carries a second <ul> for the
+     social buttons, and it must stay a horizontal row without borders. */
+  .nav-sheet__inner > ul {
+    display: flex;
+    flex-direction: column;
+    margin-block: auto;
+  }
+
+  .nav-sheet__inner > ul > li {
+    border-bottom: 1px solid var(--color-line);
+  }
+  .nav-sheet__inner > ul > li:first-child {
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* Items ride in on a stagger driven by --i. Transitions, not keyframes, so
+     the sheet closes in the same considered way it opened. */
+  .nav-sheet__inner > ul > li,
+  .nav-sheet__foot {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.4s var(--ease-brand),
+      transform 0.4s var(--ease-brand);
+  }
+  .nav-sheet[data-open="true"] .nav-sheet__inner > ul > li,
+  .nav-sheet[data-open="true"] .nav-sheet__foot {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(0.06s + var(--i) * 0.045s);
+  }
+
+  .nav-sheet__link {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    /* 60px of row on a 44px minimum — thumbs, not cursors. */
+    padding-block: 18px;
+    font-family: var(--font-display);
+    font-size: clamp(30px, 9vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .nav-sheet__index {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--color-ink-2);
+  }
+  /* Gradient wipe on press. Touch has no hover, so :active is the state that
+     actually fires — and it doubles as the desktop hover for anyone who
+     narrows a window rather than picking up a phone. */
+  .nav-sheet__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--grad);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-brand);
+  }
+  .nav-sheet__link:active::after,
+  .nav-sheet__link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav-sheet__meta {
+    font-size: 15px;
+    color: var(--color-ink);
+    transition: color 0.25s var(--ease-brand);
+  }
+  a.nav-sheet__meta:hover {
+    color: var(--color-blue);
+  }
+
+  /* The one filled gradient surface, and the only glow on the page. */
+  .btn-grad {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 9999px;
+    padding: 14px 26px 14px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    background: var(--grad);
+    box-shadow: var(--shadow-cta);
+    transition:
+      transform 0.25s var(--ease-brand),
+      box-shadow 0.25s var(--ease-brand);
+  }
+  .btn-grad:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 48px -14px rgb(10 120 236 / 0.62);
+  }
+
+  .btn-text {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .btn-text .arrow {
+    transition: transform 0.25s var(--ease-brand);
+  }
+  .btn-text:hover .arrow {
+    transform: translateY(3px);
+  }
+
+  /* One-shot sweep across the hero's single gradient keyword. The sweep needs
+     an oversized background to travel across, but it has to RESOLVE to 100%
+     so the word ends up carrying the full teal-to-blue ramp — parking it at
+     220% permanently cropped the blue end out of frame.
+     Base state is the resolved state, so no-JS and reduced-motion are right. */
+  .grad-shimmer {
+    background-size: 100% 100%;
+    background-position: 0 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .grad-shimmer {
+      animation: spot-shimmer 1.5s var(--ease-brand) 0.8s both;
+    }
+  }
+
+  /* --- Service marks ------------------------------------------------
+     Loops idle paused so nothing moves until the card is hovered or
+     focused. Pausing beats restarting on every enter: no jump-cut when
+     the pointer crosses the card twice. --------------------------------- */
+
+  .svc-panel {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, var(--color-paper) 0%, var(--color-canvas) 100%);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .svc-icon {
+    width: clamp(104px, 11vw, 132px);
+    height: clamp(104px, 11vw, 132px);
+    color: var(--color-ink);
+    overflow: visible;
+    transition: transform 0.5s var(--ease-brand);
+  }
+  .svc-card:hover .svc-icon {
+    transform: translateY(-3px);
+  }
+
+  .svc-icon [data-anim] {
+    animation-play-state: paused;
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+  }
+  .svc-card:hover .svc-icon [data-anim],
+  .svc-card:focus-within .svc-icon [data-anim] {
+    animation-play-state: running;
+  }
+
+  .svc-icon [data-anim="film"] {
+    animation: svc-film 0.9s linear infinite;
+  }
+  .svc-icon [data-anim="pulse"] {
+    animation: svc-pulse 1.6s var(--ease-brand) infinite;
+    transform-origin: 52% 50%;
+  }
+  .svc-icon [data-anim="iris"] {
+    animation: svc-iris 2.2s var(--ease-brand) infinite;
+    transform-origin: 50% 53%;
+  }
+  .svc-icon [data-anim="feed"] {
+    animation: svc-feed 2s linear infinite;
+  }
+
+  /* Client logos arrive in every colour there is. Greyed back to a common
+     weight so the row reads as one texture, then restored on hover — which is
+     also why the marquee pauses there. `brightness` alone would crush a logo
+     that is already black, hence the opacity doing the lifting. */
+  .client-logo {
+    flex: none;
+    max-width: 150px;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.5;
+    transition:
+      filter 0.35s var(--ease-brand),
+      opacity 0.35s var(--ease-brand);
+  }
+  .client-logo:hover {
+    filter: none;
+    opacity: 1;
+  }
+
+  /* --- Full-bleed cinematic hero -------------------------------------- */
+
+  .hero-full {
+    position: relative;
+    /* svh, not vh: on mobile browsers vh includes the collapsing toolbar, so
+       100vh leaves the scroll cue permanently below the fold. */
+    height: 100svh;
+    min-height: 600px;
+    max-height: 1100px;
+    overflow: hidden;
+    background: var(--color-ink);
+  }
+
+  .hero-media {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Slow push-in, so the frame feels held rather than frozen.
+     On the wrapper, never on the <video> itself — see HeroReel.tsx. */
+  .hero-reel__push {
+    position: absolute;
+    inset: 0;
+    animation: hero-push 26s ease-out both;
+  }
+
+  /* Two scrims, because one cannot do this job. The vertical pass seats the
+     header and the scroll cue; the horizontal pass protects the text column
+     specifically — the loop cuts to a brightly lit interior partway through,
+     and white type over that was down to ~2:1 with only a vertical fade. The
+     right-hand side stays clear so the footage still reads as footage. */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        90deg,
+        rgb(11 15 20 / 0.78) 0%,
+        rgb(11 15 20 / 0.62) 34%,
+        rgb(11 15 20 / 0.3) 55%,
+        rgb(11 15 20 / 0.08) 74%,
+        rgb(11 15 20 / 0) 88%
+      ),
+      linear-gradient(
+        180deg,
+        rgb(11 15 20 / 0.55) 0%,
+        rgb(11 15 20 / 0.12) 30%,
+        rgb(11 15 20 / 0.35) 70%,
+        rgb(11 15 20 / 0.8) 100%
+      );
+  }
+
+  .hero-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: var(--color-ink);
+    pointer-events: none;
+    z-index: 3;
+  }
+  .hero-bar--top {
+    top: 0;
+    transform-origin: top;
+    animation: hero-bar-top 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .hero-bar--bottom {
+    bottom: 0;
+    transform-origin: bottom;
+    animation: hero-bar-bottom 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-content {
+    position: absolute;
+    inset-inline: 0;
+    bottom: clamp(96px, 14vh, 160px);
+    z-index: 4;
+  }
+
+  .hero-cue {
+    position: absolute;
+    left: 50%;
+    translate: -50% 0;
+    bottom: clamp(28px, 4vh, 44px);
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-cue__line {
+    display: block;
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(180deg, transparent, rgb(255 255 255 / 0.6));
+    animation: hero-cue-line 2.4s ease-in-out infinite;
+  }
+
+  /* On the dark hero the light end of the brand gradient finally has room to
+     breathe — teal on ink is 12:1, where teal on the canvas was 1.4:1. */
+  .grad-text-dark {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Pointer-tilt layer for framed reels elsewhere on the site. */
+  .hero-tilt {
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  /* --- Work tiles & case pages ---------------------------------------- */
+
+  .work-tile {
+    display: block;
+    border-radius: var(--radius-tile);
+    overflow: hidden;
+  }
+  .work-tile__media {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+    background: var(--color-line);
+    /* The grain layer blends. Without this it would blend against whatever the
+       page puts behind the tile instead of against the footage. */
+    isolation: isolate;
+  }
+  /* Carries the hover push-in. The image inside carries the idle drift — one
+     element cannot run a transition and a keyframe animation on the same
+     property, so the two live on separate layers. */
+  .work-tile__frame {
+    position: absolute;
+    inset: 0;
+    transition: transform 0.8s var(--ease-brand);
+  }
+  .work-tile:hover .work-tile__frame {
+    transform: scale(1.04);
+  }
+
+  .work-tile__img {
+    object-fit: cover;
+    /* The poster sits a touch flatter than the footage, so the moment the loop
+       fades in the tile gains colour as well as movement. It is also the state
+       reduced-motion and Save-Data visitors keep, where a slightly graded still
+       beats a raw screengrab. */
+    filter: saturate(0.92) contrast(1.03);
+    transition:
+      filter 0.7s var(--ease-brand),
+      scale 0.7s var(--ease-brand);
+  }
+
+  /* The still, while its loop is still on the way.
+
+     Three of these four films only exist as low-bitrate downloads, and a large
+     motionless frame is the one presentation that shows every block edge in
+     them — the eye has nothing to track, so it reads texture instead. So the
+     waiting state is treated rather than left raw: held a hair out of focus,
+     graded down, and pushed in far enough that the blur has no edge to bleed
+     against. It reads as a frame someone made, not as a file that came out
+     badly.
+
+     It resolves as the footage crossfades in over it, so nobody ever watches
+     it sharpen. Tiles with no loop coming (reduced motion, Save-Data, a case
+     still waiting on footage) never get this — for them the poster is the
+     finished state and has to stand on its own.
+
+     `scale`, not `transform`: the idle drift below is a keyframe animation on
+     transform, and an animation always beats a declaration on the same
+     property. These are separate properties and compose. */
+  .work-tile__frame[data-state="still"] .work-tile__img {
+    filter: saturate(0.86) contrast(1.06) brightness(1.02) blur(0.7px);
+    scale: 1.03;
+  }
+  /* 24s for 4% — slow enough that you never catch it starting, present enough
+     that a tile still holding its poster is not frozen. Touch devices skip it:
+     four drifting layers is a battery cost for nothing. */
+  @media (hover: hover) and (pointer: fine) {
+    .work-tile__img {
+      animation: tile-drift 24s var(--ease-brand) infinite alternate;
+    }
+  }
+
+  /* Fractal noise, generated by the browser — no asset, no request. The layer is
+     oversized and shifted in whole steps so the pattern never sits still, which
+     is what separates film grain from a dirty screen. Transform-only, so it
+     stays on the compositor and costs nothing to repaint.
+
+     Turn `opacity` up if a source ever gets worse, down if it ever gets better:
+     this is the single knob for how much compression the tiles forgive. */
+  .work-tile__grain {
+    position: absolute;
+    inset: -30%;
+    pointer-events: none;
+    opacity: 0.13;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    animation: tile-grain 0.8s steps(1) infinite;
+  }
+
+  /* Grades the frame into the page and gives the client mark something to sit
+     on. Never strong enough to hide what is in the shot. */
+  .work-tile__scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        to top,
+        rgb(11 15 20 / 0.42) 0%,
+        rgb(11 15 20 / 0.12) 34%,
+        rgb(11 15 20 / 0) 62%
+      ),
+      linear-gradient(to bottom, rgb(11 15 20 / 0.26) 0%, rgb(11 15 20 / 0) 34%);
+    transition: opacity 0.6s var(--ease-brand);
+  }
+  /* Pulled back rather than removed — the mark still needs contrast while the
+     loop runs, and a scrim that vanishes outright reads as a flash. */
+  .work-tile:hover .work-tile__scrim {
+    opacity: 0.4;
+  }
+
+  /* Frosted chip, not a knocked-out logo: client marks arrive in their own
+     colours on transparency, and inverting them turns half of these into mud.
+     The blur is what makes it sit *in* the image instead of on top of it. */
+  .work-tile__brand {
+    position: absolute;
+    left: 16px;
+    /* Bottom left, where the scrim is deepest — the mark sits in the grade
+       instead of on the picture. It also keeps CLOK's own burned-in corner
+       bug diagonally opposite ours: two marks on the same edge read as
+       clutter, on opposite corners they read as layout. */
+    bottom: 16px;
+    display: flex;
+    align-items: center;
+    height: 38px;
+    padding-inline: 13px;
+    border-radius: var(--radius-chip);
+    background: rgb(255 255 255 / 0.82);
+    border: 1px solid rgb(255 255 255 / 0.6);
+    box-shadow: 0 8px 24px -12px rgb(11 15 20 / 0.5);
+    backdrop-filter: blur(10px) saturate(1.4);
+    -webkit-backdrop-filter: blur(10px) saturate(1.4);
+    pointer-events: none;
+    transition:
+      opacity 0.4s var(--ease-brand),
+      transform 0.5s var(--ease-brand);
+  }
+  /* Steps aside for the footage. It has done its job by then: you know whose
+     case this is before you ever hover. */
+  .work-tile:hover .work-tile__brand {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  @supports not (backdrop-filter: blur(10px)) {
+    .work-tile__brand {
+      background: rgb(255 255 255 / 0.94);
+    }
+  }
+  @media (max-width: 480px) {
+    .work-tile__brand {
+      left: 12px;
+      bottom: 12px;
+      height: 32px;
+      padding-inline: 10px;
+      /* Read by the inline height on the mark itself. */
+      --logo-scale: 0.84;
+    }
+  }
+
+  /* Caption block under each tile.
+     Grid, not flex: the index column stays a fixed width so all four titles
+     line up down the page even though "01" and "04" render at the same width
+     but the titles do not. */
+  /* Two rows: title beside its index, meta beneath it. A single row was too
+     tight on the 5-column tiles, where "PRODUCTVIDEO · 2025" and the title
+     were fighting over the same 400px. */
+  .work-cap {
+    position: relative;
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    align-items: baseline;
+    column-gap: 12px;
+    row-gap: 7px;
+    padding-top: 14px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .work-cap__head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  /* The gradient rule rides on top of the hairline and wipes in from the left.
+     Same device as the nav underline, so hovering a case reads as "this one is
+     active" rather than as a new effect. */
+  .work-cap::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: -1px;
+    height: 1px;
+    background: var(--grad);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-brand);
+  }
+  .work-item:hover .work-cap::before,
+  .work-item:focus-within .work-cap::before {
+    transform: scaleX(1);
+  }
+
+  .work-cap__index {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--color-ink-2);
+    transition: color 0.3s var(--ease-brand);
+  }
+  /* Numerals are small enough that background-clip text stays crisp on them,
+     and this is the one spot in the grid that earns the full ramp. */
+  .work-item:hover .work-cap__index,
+  .work-item:focus-within .work-cap__index {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .work-cap__title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    /* Padding grows the box to a 44px tap target; the negative margin gives the
+       space straight back, so the caption keeps its tight optical rhythm. The
+       baseline is unaffected either way, so the arrow beside it does not move. */
+    padding-block: 9px;
+    margin-block: -9px;
+  }
+  /* Covers the whole caption row: title, meta and arrow become one target. */
+  .work-cap__title::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .work-cap__meta {
+    /* Aligned under the title, not under the index. */
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-ink-2);
+    white-space: nowrap;
+  }
+  .work-cap__sep {
+    width: 3px;
+    height: 3px;
+    border-radius: 9999px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  /* Reserves its width at all times so the title never shifts when it appears —
+     only opacity and position animate. */
+  .work-cap__arrow {
+    flex: none;
+    font-size: 15px;
+    color: var(--color-blue);
+    opacity: 0;
+    transform: translateX(-7px);
+    transition:
+      opacity 0.3s var(--ease-brand),
+      transform 0.35s var(--ease-brand);
+  }
+  .work-item:hover .work-cap__arrow,
+  .work-item:focus-within .work-cap__arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* No hover on touch, so the arrow would never resolve into anything. */
+  @media (hover: none) {
+    .work-cap__arrow {
+      display: none;
+    }
+  }
+
+  /* Touch has no play cursor, so the tile carries a visible play mark instead.
+     Desktop already gets the cursor and does not need a second one, so this is
+     the only place the badge appears. */
+  .work-tile__badge {
+    position: absolute;
+    /* Right, because the client mark now owns the bottom-left corner. */
+    right: 14px;
+    bottom: 14px;
+    display: none;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    background: var(--grad);
+    box-shadow: 0 6px 18px -6px rgb(11 15 20 / 0.55);
+  }
+  .work-tile__badge svg {
+    width: 13px;
+    height: 13px;
+    /* Ink, not white: white on the teal end of the ramp measures 1.5:1. */
+    color: var(--color-ink);
+  }
+  @media (hover: none) {
+    .work-tile__badge {
+      display: grid;
+    }
+  }
+
+  /* Sits over the poster and fades in once the loop is actually running, so
+     there is never a flash of empty black while the first frame decodes. */
+  .work-tile__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.45s var(--ease-brand);
+  }
+  .work-tile__video.is-playing {
+    opacity: 1;
+  }
+
+  /* Touch has no custom cursor, so the poster needs a visible play mark. */
+  .yt-play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    background: rgb(255 255 255 / 0.92);
+    box-shadow: 0 10px 30px -12px rgb(11 15 20 / 0.5);
+    transition: opacity 0.3s var(--ease-brand);
+  }
+
+  .case-page {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-canvas);
+  }
+
+  .case-hero {
+    position: relative;
+  }
+  .case-hero::before {
+    content: none;
+  }
+
+  .case-kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: max-content;
+  }
+  .case-kicker::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background: var(--grad);
+  }
+
+  .case-meta::before {
+    content: none;
+  }
+  .case-meta dd {
+    color: var(--color-ink);
+  }
+
+  .case-film-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+  .case-film-wrap::before {
+    content: none;
+  }
+
+  /* The one piece of gradient on a case page. The film is what the visitor
+     came for, so it gets the brand hairline instead of the neutral one every
+     other frame on the site wears — a ring, not a fill, so it reads as the
+     page pointing at the film rather than as chrome. */
+  .case-film {
+    border: 0;
+    box-shadow:
+      0 26px 64px -52px rgb(11 15 20 / 0.45),
+      0 18px 44px -34px rgb(10 120 236 / 0.28);
+  }
+  .case-film::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    /* Gradient border without a border: the gradient fills the box, then the
+       mask cuts out everything inside the padding edge. A real border-image
+       cannot follow the corner radius. */
+    padding: 1.5px;
+    background: var(--grad);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  @media (max-width: 767px) {
+    .case-kicker::before {
+      width: 6px;
+      height: 6px;
+    }
+  }
+
+  .case-next {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 14px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .case-next__arrow {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    flex: none;
+    border-radius: 9999px;
+    border: 1px solid var(--color-line);
+    font-size: 20px;
+    transition:
+      transform 0.35s var(--ease-brand),
+      border-color 0.35s var(--ease-brand);
+  }
+  .case-next:hover .case-next__arrow {
+    transform: translateX(8px);
+    border-color: var(--color-blue);
+  }
+
+  /* --- Contact details ----------------------------------------------- */
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    gap: 14px;
+    /* 320px leaves ~246px for the text once the icon and gap are paid for, and
+       the address is longer than that. Without a wrap opportunity it pushed the
+       whole document 4px wide and every fixed element with it. */
+    font-size: clamp(15px, 4.2vw, 17px);
+    color: var(--color-ink);
+    transition: color 0.25s var(--ease-brand);
+  }
+  .contact-row > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .contact-row:not(.is-static):hover {
+    color: var(--color-blue);
+  }
+  .contact-row__icon {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    color: var(--color-ink-2);
+    transition: color 0.25s var(--ease-brand);
+  }
+  .contact-row:not(.is-static):hover .contact-row__icon {
+    color: var(--color-blue);
+  }
+
+  /* 44px is the floor for a comfortable tap target, so the button stays that
+     size even though the glyph inside is 18px. */
+  .social-btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    border: 1px solid var(--color-line);
+    color: var(--color-ink-2);
+    transition:
+      color 0.25s var(--ease-brand),
+      border-color 0.25s var(--ease-brand),
+      background-color 0.25s var(--ease-brand);
+  }
+  .social-btn:hover {
+    color: var(--color-ink);
+    border-color: #d4dae1;
+    background: var(--color-paper);
+  }
+
+  /* --- Contact form -------------------------------------------------- */
+
+  .form-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: clamp(24px, 3.5vw, 36px);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-paper);
+    box-shadow: var(--shadow-tile);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: var(--color-canvas);
+    padding: 13px 14px;
+    font: inherit;
+    font-size: 15px;
+    color: var(--color-ink);
+    transition:
+      border-color 0.25s var(--ease-brand),
+      background-color 0.25s var(--ease-brand);
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--color-ink-2);
+    opacity: 0.75;
+  }
+  .field input:hover,
+  .field textarea:hover {
+    border-color: #d4dae1;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    background: var(--color-paper);
+    border-color: var(--color-blue);
+  }
+  /* Error state carries a border colour AND the message below it — colour
+     alone would be the only signal for anyone who cannot distinguish it. */
+  .field input[aria-invalid="true"],
+  .field textarea[aria-invalid="true"] {
+    border-color: #c8322f;
+  }
+  .field-error {
+    font-size: 13px;
+    color: #c8322f;
+  }
+
+  .form-status {
+    font-size: 14px;
+    line-height: 1.5;
+    /* Reserves no space until it has something to say, so the card does not
+       jump when a result arrives. */
+    display: none;
+  }
+  .form-status.is-shown {
+    display: block;
+  }
+  .form-status.is-ok {
+    color: #0e7a53;
+  }
+  .form-status.is-error {
+    color: #c8322f;
+  }
+
+  .btn-grad:disabled {
+    opacity: 0.65;
+    transform: none;
+  }
+
+  /* Honeypot — removed from view, from the tab order and from the a11y tree,
+     but still submitted, which is exactly what catches bots. */
+  .hp {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* --- Wel / niet switch -------------------------------------------- */
+
+  .why-seg {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border-radius: 9999px;
+    padding: 9px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-ink-2);
+    white-space: nowrap;
+    transition:
+      color 0.3s var(--ease-brand),
+      background-color 0.3s var(--ease-brand);
+  }
+  .why-seg[data-active="true"] {
+    color: #fff;
+    background: var(--grad);
+  }
+  .why-seg[data-active="false"]:hover {
+    color: var(--color-ink);
+    background: var(--color-canvas);
+  }
+
+  /* Both words occupy the same slot; the wider one sizes it, so swapping
+     never reflows the headline. */
+  /* The slot is as wide as the longer word ("niet"), so the line never
+     reflows on a flip. Centring shares the slack instead of dumping it all
+     after the shorter word, where it read as a stray double space. */
+  .why-word {
+    position: relative;
+    display: inline-grid;
+    justify-items: center;
+    vertical-align: baseline;
+  }
+  .why-word > span {
+    grid-area: 1 / 1;
+    transition:
+      opacity 0.3s var(--ease-brand),
+      transform 0.3s var(--ease-brand);
+  }
+  .why-word__on {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .why-word__off {
+    color: var(--color-ink-2);
+  }
+  .why-word[data-on="true"] .why-word__off,
+  .why-word[data-on="false"] .why-word__on {
+    opacity: 0;
+    transform: translateY(-0.18em);
+  }
+  .why-word[data-on="true"] .why-word__on,
+  .why-word[data-on="false"] .why-word__off {
+    opacity: 1;
+    transform: none;
+  }
+
+  .why-card {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-paper);
+    padding: 26px 24px 28px;
+  }
+
+  .why-card__swap {
+    animation: why-swap 0.42s var(--ease-brand) both;
+  }
+
+  .why-dot {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 9999px;
+    background: var(--grad);
+    transition: all 0.3s var(--ease-brand);
+  }
+  /* Absence, drawn as absence: a hollow ring instead of a filled mark. */
+  .why-card[data-on="false"] .why-dot {
+    background: none;
+    border: 1.5px solid var(--color-line);
+  }
+
+  /* --- Legal pages ---------------------------------------------------
+     The only long-form prose on the site, so the rhythm is set here rather
+     than with utility classes repeated down two files. */
+
+  .legal-prose h2 {
+    margin-top: 44px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .legal-prose p {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+  }
+  .legal-prose h2 + p {
+    margin-top: 12px;
+  }
+  .legal-prose a {
+    color: var(--color-blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Unfinished passages, marked so they cannot quietly ship as if they were
+     final. Not colour alone: the label carries the meaning. */
+  .legal-todo {
+    border-left: 3px solid var(--color-blue);
+    border-radius: 0 8px 8px 0;
+    background: var(--color-canvas);
+    padding: 14px 18px;
+  }
+  .legal-todo::before {
+    content: "Nog af te ronden — ";
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .legal-todo-inline {
+    border-radius: 5px;
+    background: var(--color-canvas);
+    padding: 1px 7px;
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  /* --- Signature play cursor -------------------------------------- */
+
+  /* One custom property drives disc and glyph together, so the whole thing
+     resizes as a single object instead of drifting apart. */
+  .play-cursor {
+    --size: 13px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* Above every other layer — header (100), flying mark (110), lightbox
+       (120). The native pointer is hidden, so anything that paints over this
+       leaves the user with no cursor at all. */
+    z-index: 200;
+    width: 76px;
+    height: 76px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s var(--ease-brand);
+    will-change: transform;
+    display: grid;
+    place-items: center;
+  }
+  /* Three states. One size would either be too coarse to aim with or too
+     faint to notice — the old single 17px ring was the latter. */
+  .play-cursor[data-state="link"] {
+    --size: 32px;
+  }
+  .play-cursor[data-state="play"] {
+    --size: 76px;
+  }
+
+  /* Solid gradient mass carries the visibility; a hairline ring vanished
+     against the near-white canvas. */
+  .play-cursor__disc {
+    position: absolute;
+    box-sizing: border-box;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 9999px;
+    background: var(--grad);
+    box-shadow: 0 8px 22px -8px rgb(10 120 236 / 0.55);
+    transition:
+      width 0.4s var(--ease-brand),
+      height 0.4s var(--ease-brand);
+  }
+
+  /* Over a link it becomes a ring, not a disc: at 32px a filled disc covers
+     the very label you are about to click. */
+  .play-cursor[data-state="link"] .play-cursor__disc {
+    padding: 2.5px;
+    box-shadow: none;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .play-cursor__scale {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    transition:
+      width 0.4s var(--ease-brand),
+      height 0.4s var(--ease-brand);
+  }
+
+  .play-cursor svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /* Over media the disc gets out of the way entirely and hands the state to
+     the glyph. Collapsed into the triangle's own centre rather than faded on
+     the spot, so the small pointer reads as having become the mark instead of
+     two shapes swapping places. */
+  .play-cursor[data-state="play"] .play-cursor__disc {
+    opacity: 0;
+    scale: 0.3;
+    transition:
+      opacity 0.22s var(--ease-brand),
+      scale 0.34s var(--ease-brand);
+  }
+
+  .play-cursor__glyph {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    opacity: 0;
+    /* Enters from behind and slightly left, so arriving on a tile is a small
+       forward move — a play triangle advancing, which is the one gesture this
+       shape already means. Nothing rotates; the old dashed ring spinning
+       around it was motion that pointed at itself. */
+    scale: 0.55;
+    translate: -7px 0;
+    transition:
+      opacity 0.26s var(--ease-brand),
+      scale 0.42s var(--ease-brand),
+      translate 0.42s var(--ease-brand);
+    /* No disc behind it any more, so the shape carries its own separation from
+       the footage. Two shadows: a tight one for edge definition on a bright
+       sky, a wide soft one for mass on a mid grey. */
+    filter:
+      drop-shadow(0 1px 2px rgb(11 15 20 / 0.45))
+      drop-shadow(0 6px 16px rgb(11 15 20 / 0.35));
+  }
+  .play-cursor[data-state="play"] .play-cursor__glyph {
+    opacity: 1;
+    scale: 1;
+    /* Settles, then breathes forward on a slow beat. `translate` and `scale`
+       are separate properties from `transform`, so the keyframe below composes
+       with the entry above instead of cancelling it. */
+    animation: play-glyph-drift 3.6s var(--ease-brand) 0.42s infinite;
+    translate: 0 0;
+  }
+
+  /* Only hide the native pointer once the custom one is actually mounted. */
+  html.has-play-cursor,
+  html.has-play-cursor body,
+  html.has-play-cursor a,
+  html.has-play-cursor button,
+  html.has-play-cursor [role="button"] {
+    cursor: none;
+  }
+  /* Text entry keeps a real caret — never trade usability for the effect. */
+  html.has-play-cursor input,
+  html.has-play-cursor textarea,
+  html.has-play-cursor select {
+    cursor: auto;
+  }
+}
+
+/* The play glyph's idle beat. Holds, pushes forward, eases back — a triangle
+   advancing, which is what the shape already means. Values are SVG user units
+   in the cursor's 0-100 box, so at play size this is a drift of about two
+   pixels: enough to register as alive, not enough to aim around. */
+@keyframes play-glyph-drift {
+  0%,
+  55%,
+  100% {
+    translate: -1.5px 0;
+  }
+  78% {
+    translate: 3px 0;
+  }
+}
+
+@keyframes spot-shimmer {
+  from {
+    background-size: 220% 100%;
+    background-position: 100% 0;
+  }
+  to {
+    background-size: 100% 100%;
+    background-position: 0 0;
+  }
+}
+
+/* Card content swap on the wel/niet switch. Short and tight on purpose —
+   this fires on every toggle, so anything slower would feel laboured. */
+@keyframes why-swap {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* Service marks. Each loop returns exactly to its start so pausing mid-cycle
+   never leaves the icon in a broken-looking pose. */
+@keyframes svc-film {
+  to {
+    transform: translateX(-12px);
+  }
+}
+@keyframes svc-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.14);
+  }
+}
+@keyframes svc-iris {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  45% {
+    transform: rotate(30deg) scale(0.66);
+  }
+}
+@keyframes svc-feed {
+  to {
+    transform: translateY(-28px);
+  }
+}
+
+/* Trust marquee — slow, and it stops on hover so logos stay readable. */
+@keyframes spot-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Hero load sequence — CSS, not JS.
+
+   This started life as a GSAP timeline. That meant the hero stayed hidden
+   until React had hydrated and GSAP had parsed: on a throttled phone the
+   first line of copy appeared at 5.1s, and LCP landed at 3.5s. A load
+   animation that only plays on fast hardware is not a load animation.
+
+   Driving it with CSS instead means it starts at first paint, on every
+   device, with no JS at all. `animation-fill-mode: both` supplies the hidden
+   start state during the delay, so nothing needs a pre-paint guard class and
+   nothing can get stuck hidden if a script fails.
+
+   GSAP still owns the S-mark spin and its flight into the header, because
+   that one needs to measure real layout positions.
+
+   Per-element delays are set inline in Hero.tsx so the sequence reads in one
+   place. Everything lands by ~1.85s.
+------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero-rule] {
+    animation: hero-rule 0.55s var(--ease-brand) both;
+  }
+  [data-hero-eyebrow],
+  [data-hero-stagger] {
+    animation: hero-up 0.55s var(--ease-brand) both;
+  }
+  [data-hero-line] {
+    animation: hero-line 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  [data-hero-frame] {
+    animation: hero-frame 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  [data-hero-cue] {
+    animation: hero-fade 0.4s linear both;
+  }
+  /* Held back until the flying mark lands on it, which the GSAP timeline does
+     explicitly. This is only the no-JS safety net, so it fires slightly after
+     the flight would have finished (1.54s) and never wins a race with it. */
+  [data-header-mark] {
+    animation: hero-fade 0.01s linear 1.6s both;
+  }
+}
+
+@keyframes hero-rule {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes hero-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hero-line {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+/* The frame opens like a lens: a horizontal slit widening to full 21:9.
+   Both ends of clip-path are declared explicitly — with only a `from`, the
+   property has nothing to interpolate towards and the reveal never plays. */
+@keyframes hero-frame {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+    clip-path: inset(50% 0 50% 0 round 20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0 round 20px);
+  }
+}
+/* Letterbox opening: the bars sit over the film and retract to the edges. */
+@keyframes hero-bar-top {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+@keyframes hero-bar-bottom {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+
+/* A single very slow push-in. Not a loop: a zoom that snapped back every few
+   seconds would read as a glitch. */
+@keyframes hero-push {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Five whole-pixel jumps a second. Steps, not a smooth tween: grain that slides
+   reads as a moving texture sitting on top of the picture, grain that jumps
+   reads as part of the emulsion. */
+@keyframes tile-grain {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    transform: translate3d(-7%, 4%, 0);
+  }
+  40% {
+    transform: translate3d(5%, -6%, 0);
+  }
+  60% {
+    transform: translate3d(-4%, -3%, 0);
+  }
+  80% {
+    transform: translate3d(6%, 5%, 0);
+  }
+}
+
+/* Idle drift on work posters. Alternates, so it never snaps back — it turns
+   around instead. */
+@keyframes tile-drift {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.04) translate3d(-0.8%, -0.6%, 0);
+  }
+}
+
+@keyframes hero-cue-line {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.6);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion — built in from the start, not bolted on.
+   Everything becomes instant; nothing depends on a transform having
+   run in order to be visible.
+------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .line-mask > span,
+  [data-reveal] {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  /* The blanket rule above collapses durations but leaves delays alone, which
+     would hold the closed sheet visible — and hit-testable — for a third of a
+     second after it fades. */
+  .nav-sheet,
+  .nav-sheet .nav-sheet__inner > ul > li,
+  .nav-sheet .nav-sheet__foot {
+    transition-delay: 0s !important;
+  }
+}
