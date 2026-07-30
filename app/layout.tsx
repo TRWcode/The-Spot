@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { generalSans, switzer } from "@/app/fonts";
 import { MotionProvider } from "@/components/motion/MotionProvider";
+import { RouteScroll } from "@/components/motion/RouteScroll";
 import { PlayCursor } from "@/components/ui/PlayCursor";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             Naar hoofdinhoud
           </a>
 
+          <RouteScroll />
           <PlayCursor />
           <Header />
           <main id="main">{children}</main>
