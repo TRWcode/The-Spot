@@ -49,22 +49,30 @@ export default function AboutPage() {
             column — the picture introduces, the words do the work. */}
         <div className="shell section-y-tight grid items-start gap-12 lg:grid-cols-[0.85fr_1fr] lg:gap-20">
           <Reveal y={24}>
-            <div className="about-portrait">
-              {hasPortrait ? (
-                <Image
-                  src={about.portrait.src}
-                  alt={about.portrait.alt}
-                  fill
-                  sizes="(min-width: 1024px) 45vw, 100vw"
-                  className="object-cover"
-                  priority
-                />
-              ) : (
-                <span className="about-portrait__placeholder" aria-hidden>
-                  <SMark className="h-16 w-16" />
-                </span>
+            <figure>
+              <div className="about-portrait">
+                {hasPortrait ? (
+                  <Image
+                    src={about.portrait.src}
+                    alt={about.portrait.alt}
+                    fill
+                    sizes="(min-width: 1024px) 45vw, 100vw"
+                    className="object-cover"
+                    priority
+                  />
+                ) : (
+                  <span className="about-portrait__placeholder" aria-hidden>
+                    <SMark className="h-16 w-16" />
+                  </span>
+                )}
+              </div>
+              {hasPortrait && (
+                <figcaption className="mt-4 flex items-center gap-3 text-[15px]">
+                  <span className="grad-rule w-8 shrink-0" aria-hidden />
+                  {about.portrait.caption}
+                </figcaption>
               )}
-            </div>
+            </figure>
           </Reveal>
 
           <Reveal y={20} delay={0.1}>

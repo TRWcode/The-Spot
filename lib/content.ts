@@ -28,7 +28,7 @@ export const site = {
  * hashes work from a case page as well as from the homepage.
  */
 export const nav = [
-  { label: "Werk", href: "#werk" },
+  { label: "Werk", href: "/werk" },
   { label: "Diensten", href: "#diensten" },
   { label: "Over", href: "/over-ons" },
   { label: "Contact", href: "/contact" },
@@ -119,6 +119,12 @@ export const work = {
   eyebrow: "Selected work",
   title: "Recent werk",
   ctaLabel: "Alle cases",
+  /** /werk — the index the homepage section links through to. */
+  page: {
+    eyebrow: "Werk",
+    title: "Wat we hebben gemaakt.",
+    lead: "Bedrijfsfilms, aftermovies, productvideo's en merkverhalen. Elke case laat zien wat de vraag was, hoe we hem hebben aangepakt en wat het opleverde.",
+  },
   items: [
     {
       slug: "kinderfysio-haarlem",
@@ -278,13 +284,20 @@ export const about = {
   title: "Gemaakt om impact te maken.",
   lead: "Wij maken video en fotografie op maat: beeld dat je merk versterkt, je verhaal vertelt en blijft hangen. Geen standaard formats, geen bestelling afleveren.",
   /**
-   * Portrait. Drop the file at public/media/about/team.jpg and it appears —
-   * until then the page shows a branded panel in its place, so there is never
-   * a broken image on a live site. See app/over-ons/page.tsx.
+   * Portrait. Generated from assets-inbox/photos/ by scripts/make-photos.mjs;
+   * app/over-ons/page.tsx checks the file exists at build time and falls back
+   * to a branded panel, so a missing photo is never a broken image.
    */
   portrait: {
-    src: "/media/about/team.jpg",
-    alt: "Het team van The SPOT",
+    src: "/media/about/beer.jpg",
+    alt: "Beer van The SPOT",
+    /**
+     * TODO: bevestig achternaam en functietitel. "Beer" komt uit het
+     * e-mailadres in `site`; de rest is bewust niet ingevuld in plaats van
+     * geraden, want een verzonnen functie op een over-onspagina is erger dan
+     * geen functie.
+     */
+    caption: "Beer",
   },
   story: {
     title: "Creatie, groei en ondernemerschap",

@@ -15,7 +15,7 @@ const CHROME = "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const base = process.argv[2] ?? "http://localhost:3130";
 
 const WIDTHS = [320, 360, 390, 430, 600, 768, 834, 1024, 1280, 1440, 1920];
-const PAGES = ["/", "/werk/clok", "/over-ons", "/contact"];
+const PAGES = ["/", "/werk", "/werk/clok", "/over-ons", "/contact"];
 
 await mkdir("shots/responsive", { recursive: true });
 

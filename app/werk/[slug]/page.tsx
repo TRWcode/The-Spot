@@ -56,7 +56,7 @@ export default async function CasePage({ params }: { params: Promise<Params> }) 
     <>
       <article className="case-page pt-[124px] md:pt-[132px]">
         <div className="case-hero shell">
-          <Link href="/#werk" className="btn-text text-ink-2 hover:text-ink">
+          <Link href="/werk" className="btn-text text-ink-2 hover:text-ink">
             <span aria-hidden>←</span> Alle cases
           </Link>
 

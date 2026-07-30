@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: SITE_URL, lastModified: now, changeFrequency: "monthly", priority: 1 },
+    { url: `${SITE_URL}/werk`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/over-ons`, lastModified: now, changeFrequency: "yearly", priority: 0.7 },
     { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "yearly", priority: 0.7 },
     ...work.items.map((item) => ({

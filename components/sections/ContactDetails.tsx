@@ -1,6 +1,7 @@
 import { Icon } from "@/components/brand/Icon";
 import { SocialIcon } from "@/components/brand/SocialIcon";
 import { site } from "@/lib/content";
+import { socialProfiles } from "@/lib/socials";
 
 /**
  * Mail, phone, address and socials — the block that appears both in the
@@ -32,7 +33,7 @@ export function ContactDetails() {
       </p>
 
       <ul className="mt-3 flex gap-2.5">
-        {site.socials.map((s) => (
+        {socialProfiles.map((s) => (
           <li key={s.label}>
             <a
               href={s.href}

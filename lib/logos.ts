@@ -27,6 +27,34 @@ export function logoForCase(slug: string): ClientLogo | undefined {
 
 export const clientLogos: ClientLogo[] = [
   {
+    "name": "Staatsbosbeheer",
+    "caseSlug": null,
+    "src": "/logos/staatsbosbeheer.webp",
+    "w": 61,
+    "h": 42
+  },
+  {
+    "name": "Talpa Studios",
+    "caseSlug": null,
+    "src": "/logos/talpa-studios.webp",
+    "w": 86,
+    "h": 31
+  },
+  {
+    "name": "Make-A-Wish",
+    "caseSlug": null,
+    "src": "/logos/make-a-wish.webp",
+    "w": 112,
+    "h": 24
+  },
+  {
+    "name": "VVD",
+    "caseSlug": null,
+    "src": "/logos/vvd.webp",
+    "w": 55,
+    "h": 55
+  },
+  {
     "name": "CLOK",
     "caseSlug": "clok",
     "src": "/logos/clok.webp",
@@ -34,11 +62,11 @@ export const clientLogos: ClientLogo[] = [
     "h": 42
   },
   {
-    "name": "De Groot Recreatie",
-    "caseSlug": "de-groot-recreatie",
-    "src": "/logos/de-groot-recreatie.webp",
-    "w": 132,
-    "h": 22
+    "name": "Kinderfysio Haarlem",
+    "caseSlug": "kinderfysio-haarlem",
+    "src": "/logos/kinderfysio-haarlem.webp",
+    "w": 105,
+    "h": 26
   },
   {
     "name": "Khione",
@@ -48,10 +76,59 @@ export const clientLogos: ClientLogo[] = [
     "h": 30
   },
   {
-    "name": "Kinderfysio Haarlem",
-    "caseSlug": "kinderfysio-haarlem",
-    "src": "/logos/kinderfysio-haarlem.webp",
-    "w": 105,
-    "h": 26
+    "name": "De Groot Recreatie",
+    "caseSlug": "de-groot-recreatie",
+    "src": "/logos/de-groot-recreatie.webp",
+    "w": 132,
+    "h": 22
+  },
+  {
+    "name": "Spaarnelanden",
+    "caseSlug": null,
+    "src": "/logos/spaarnelanden.webp",
+    "w": 99,
+    "h": 27
+  },
+  {
+    "name": "Maverick Marketing & Events",
+    "caseSlug": null,
+    "src": "/logos/maverick.webp",
+    "w": 118,
+    "h": 23
+  },
+  {
+    "name": "Brand Whispers",
+    "caseSlug": null,
+    "src": "/logos/brand-whispers.webp",
+    "w": 101,
+    "h": 27
+  },
+  {
+    "name": "Gewoon Pleun",
+    "caseSlug": null,
+    "src": "/logos/gewoon-pleun.webp",
+    "w": 55,
+    "h": 42
+  },
+  {
+    "name": "Fysiotherapie van Ham",
+    "caseSlug": null,
+    "src": "/logos/fysiotherapie-van-ham.webp",
+    "w": 93,
+    "h": 29
+  },
+  {
+    "name": "Luxe Sloepen Haarlem",
+    "caseSlug": null,
+    "src": "/logos/luxe-sloepen-haarlem.webp",
+    "w": 66,
+    "h": 41
+  },
+  {
+    "name": "Hygge Haarlem",
+    "caseSlug": null,
+    "src": "/logos/hygge-haarlem.webp",
+    "w": 99,
+    "h": 27
   }
 ];

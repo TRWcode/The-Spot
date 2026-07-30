@@ -3,6 +3,7 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { SocialIcon } from "@/components/brand/SocialIcon";
 import { legal, nav, site } from "@/lib/content";
 import { navHref } from "@/lib/nav";
+import { socialProfiles } from "@/lib/socials";
 import { ScrollTop } from "@/components/site/ScrollTop";
 
 export function Footer() {
@@ -61,7 +62,7 @@ export function Footer() {
             </ul>
 
             <ul className="mt-6 flex gap-2">
-              {site.socials.map((s) => (
+              {socialProfiles.map((s) => (
                 <li key={s.label}>
                   <a
                     href={s.href}

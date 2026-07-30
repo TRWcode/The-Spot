@@ -7,6 +7,7 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { SocialIcon } from "@/components/brand/SocialIcon";
 import { nav, site } from "@/lib/content";
 import { navHref } from "@/lib/nav";
+import { socialProfiles } from "@/lib/socials";
 import { useMotion } from "@/components/motion/MotionProvider";
 
 /**
@@ -296,7 +297,7 @@ export function Header() {
               </div>
 
               <ul className="flex gap-2">
-                {site.socials.map((s) => (
+                {socialProfiles.map((s) => (
                   <li key={s.label}>
                     <a
                       href={s.href}
