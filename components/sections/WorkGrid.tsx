@@ -26,7 +26,7 @@ export function WorkGrid({ className }: { className?: string }) {
             <TileMedia
               poster={item.poster}
               clip={"clip" in item ? item.clip : undefined}
-              alt={`${item.project} — ${item.kind}`}
+              alt={`${item.project}, ${item.kind}`}
               ratio={item.ratio}
               sizes="(max-width: 768px) 100vw, (max-width: 1240px) 50vw, 620px"
               // Absent while a client's mark is still being collected — the tile

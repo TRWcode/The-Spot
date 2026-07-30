@@ -10,13 +10,13 @@ import { SITE_URL } from "@/lib/site-url";
 import "./globals.css";
 
 /** Built by scripts/make-og.mjs at the 1.91:1 every platform re-crops to. */
-const OG_IMAGE = { url: "/og.jpg", width: 1200, height: 630, alt: `${site.name} — ${site.tagline}` };
+const OG_IMAGE = { url: "/og.jpg", width: 1200, height: 630, alt: `${site.name} | ${site.tagline}` };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} | ${site.tagline}`,
+    template: `%s | ${site.name}`,
   },
   description:
     "The SPOT maakt video en social media content die aandacht pakt en blijft plakken. Van particulier tot merk, uit Haarlem.",
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
     locale: "nl_NL",
     url: SITE_URL,
     siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} | ${site.tagline}`,
     description: "Video en content die aandacht pakt en blijft plakken. Van particulier tot merk.",
     images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} | ${site.tagline}`,
     description: "Video en content die aandacht pakt en blijft plakken.",
     images: [OG_IMAGE.url],
   },

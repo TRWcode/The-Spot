@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const item = work.items.find((i) => i.slug === slug);
   if (!item) return {};
 
-  const title = `${item.project} — ${item.kind}`;
+  const title = `${item.project} - ${item.kind}`;
   return {
     title,
     description: item.intro,
@@ -103,7 +103,7 @@ export default async function CasePage({ params }: { params: Promise<Params> }) 
             id={item.youtube}
             poster={item.poster}
             clip={item.clip}
-            title={`${item.project} — ${item.kind}`}
+            title={`${item.project} - ${item.kind}`}
             priority
             sizes="(min-width: 1680px) 1560px, calc(100vw - 80px)"
             className="case-film"

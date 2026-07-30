@@ -31,9 +31,11 @@ export const site = {
     kvk: "96981547",
   },
   socials: [
-    { label: "LinkedIn", href: "https://linkedin.com" }, // TODO: real profile
-    { label: "Instagram", href: "https://instagram.com" }, // TODO: real profile
-    { label: "TikTok", href: "https://tiktok.com" }, // TODO: real profile
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/beer-dikkeboom-b768a0264/" },
+    { label: "Instagram", href: "https://www.instagram.com/spotvideoproducties/" },
+    // Zonder de tracking-parameters waarmee TikTok deelt: die horen bij het
+    // apparaat dat de link kopieerde, niet bij het profiel.
+    { label: "TikTok", href: "https://www.tiktok.com/@spotvideoproducties31" },
   ],
 } as const;
 
@@ -51,7 +53,7 @@ export const nav = [
 ] as const;
 
 export const hero = {
-  eyebrow: "Videoproductie — Social media content",
+  eyebrow: "Videoproductie en social media content",
   /**
    * Authored as explicit lines so the mask reveal is deterministic.
    * "spot" carries the single permitted gradient keyword — it is the pun the
@@ -62,7 +64,7 @@ export const hero = {
     { text: "heeft z'n", accent: null },
     { text: "spot.", accent: "spot." },
   ],
-  lead: "Wij maken video en content die aandacht pakt en blijft plakken — van particulier tot merk. Geen standaard formats, wél beeld dat beweegt.",
+  lead: "Wij maken video en content die aandacht pakt en blijft plakken, van particulier tot merk. Geen standaard formats, wel beeld dat beweegt.",
   /**
    * The hero plays an ambient montage cut from existing case footage
    * (scripts/make-hero-loop.mjs), not a full film.
@@ -101,7 +103,7 @@ export const services = {
     },
     {
       title: "Professionele fotografie",
-      body: "Scherpe merkbeelden, portretten en productfotografie — klaar voor web, print en socials.",
+      body: "Scherpe merkbeelden, portretten en productfotografie, klaar voor web, print en socials.",
       icon: "camera",
       poster: "/media/posters/service-foto.jpg", // TODO
     },
@@ -158,7 +160,7 @@ export const work = {
       situation:
         "De praktijk wilde ouders vooraf laten zien hoe een behandeling eruitziet, zodat kinderen met een vertrouwd gevoel binnenkomen.",
       approach:
-        "We hebben een dag meegelopen en de sfeer op de praktijk vastgelegd zoals die is — rustig, speels en zonder geregisseerde momenten.",
+        "We hebben een dag meegelopen en de sfeer op de praktijk vastgelegd zoals die is: rustig, speels en zonder geregisseerde momenten.",
       result:
         "Een video die de drempel verlaagt en op de site en socials het eerste beeld vormt dat ouders van de praktijk krijgen.",
     },
@@ -236,7 +238,7 @@ export const why = {
     "Bij ons reken je op scherpe concepten, korte lijnen en beeld dat aansluit op wat je écht wilt bereiken.",
   labels: { with: "wel", without: "niet" },
   with: [
-    { title: "Kwaliteit die opvalt", body: "Beeld dat je twee keer laat kijken — en dat naast de grote merken kan staan." },
+    { title: "Kwaliteit die opvalt", body: "Beeld dat je twee keer laat kijken, en dat naast de grote merken kan staan." },
     { title: "Snel schakelen", body: "Korte lijnen, geen ruis. Vandaag bellen kan morgen draaien betekenen." },
     { title: "Fris maar ervaren", body: "De energie van een nieuw merk, de rust van honderden producties." },
     { title: "Alles onder één dak", body: "Concept, opname, montage, kleur en muziek. Eén aanspreekpunt." },
@@ -267,7 +269,7 @@ export const testimonial = {
 export const contactPage = {
   eyebrow: "Contact",
   title: "Vertel wat je voor ogen hebt.",
-  lead: "Een idee, een deadline of alleen een vraag — het mag allemaal kort. Je krijgt binnen één werkdag antwoord van iemand die de productie ook echt draait.",
+  lead: "Een idee, een deadline of alleen een vraag. Het mag allemaal kort. Je krijgt binnen één werkdag antwoord van iemand die de productie ook echt draait.",
   /** Set against the promise in `lead`: what happens after the send button. */
   steps: [
     {
@@ -332,7 +334,7 @@ export const about = {
   values: [
     {
       title: "Kwaliteit die opvalt",
-      body: "Beeld dat je twee keer laat kijken — en dat naast de grote merken kan staan.",
+      body: "Beeld dat je twee keer laat kijken, en dat naast de grote merken kan staan.",
     },
     {
       title: "Korte lijnen",
@@ -358,7 +360,7 @@ export const contact = {
   eyebrow: "Sparren met of zonder koffie?",
   title: "Laten we jouw visie tot leven brengen.",
   cta: "Start jouw project",
-  lead: "Vertel kort wat je voor ogen hebt. Je krijgt binnen één werkdag antwoord — geen offertemolen, gewoon een gesprek.",
+  lead: "Vertel kort wat je voor ogen hebt. Je krijgt binnen één werkdag antwoord. Geen offertemolen, gewoon een gesprek.",
   form: {
     name: "Naam",
     namePlaceholder: "Jouw naam",

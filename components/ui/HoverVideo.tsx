@@ -108,7 +108,7 @@ export function HoverVideo({
       }
       role={interactive ? "button" : undefined}
       tabIndex={interactive ? 0 : undefined}
-      aria-label={interactive ? `${alt} — bekijk video` : undefined}
+      aria-label={interactive ? `${alt}, bekijk video` : undefined}
     >
       <Image
         src={poster}

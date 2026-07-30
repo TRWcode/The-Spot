@@ -47,12 +47,12 @@ export default function Privacy() {
       <p>
         De verzending loopt via Resend, een e-maildienst die als verwerker optreedt. Je bericht
         wordt daar verwerkt om het bij ons af te leveren. We slaan formulierinzendingen niet op in
-        een database — ze komen binnen als e-mail en blijven in onze mailbox staan.
+        een database. Ze komen binnen als e-mail en blijven in onze mailbox staan.
       </p>
       <h2>Hoe lang we gegevens bewaren</h2>
       <p>
         We bewaren persoonsgegevens niet langer dan nodig is voor het doel waarvoor ze zijn
-        verzameld, tenzij we wettelijk verplicht zijn ze langer te bewaren — voor de administratie
+        verzameld, tenzij we wettelijk verplicht zijn ze langer te bewaren. Voor de administratie
         geldt bijvoorbeeld de fiscale bewaarplicht van zeven jaar. Een aanvraag die niet tot een
         opdracht leidt, verwijderen we uit onze mailbox zodra het contact is afgerond.
       </p>
@@ -80,7 +80,7 @@ export default function Privacy() {
         Bij opnames leggen we mensen vast op beeld. Voor publicatie van herkenbaar beeld maken we
         vooraf afspraken met de opdrachtgever, en waar nodig vragen we toestemming aan de personen
         in beeld. Wil je dat een opname waarin jij herkenbaar bent van deze site verdwijnt, mail
-        ons dan — dat regelen we.
+        ons dan, dat regelen we.
       </p>
 
       <h2>Je rechten</h2>

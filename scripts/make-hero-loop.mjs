@@ -31,16 +31,18 @@ const OUT_SMALL = "public/media/clips/hero-loop-sm.mp4";
 const POSTER = "public/media/posters/hero.jpg";
 
 /**
- * 1600, not the source's 1920.
+ * The master's own 1920, not a downscale.
  *
- * The hero is one continuously moving, heavily scrimmed surface — the least
- * detail-critical pixel on the site. 1920x1080 for eighteen seconds came to
- * well over four megabytes, which is the whole page budget spent on the
- * background of the first screen. 1600 is still above the CSS width of every
- * laptop it will play on.
+ * This ran at 1600 to save weight, on the reasoning that the hero is a moving,
+ * heavily scrimmed surface where detail matters least. That is true of most of
+ * the film and wrong about the shots that sell it: the showroom, the dashboard
+ * and the drone pass carry fine detail, and at 1:1 the native encode is
+ * visibly crisper than a 1600 cut enlarged back to the same size. It is the
+ * first thing a visitor sees and the only proof on the page that this studio
+ * can shoot — so it gets the resolution it was delivered in.
  */
-const W = 1600;
-const H = Math.round((W * 9) / 16 / 2) * 2; // 900
+const W = 1920;
+const H = Math.round((W * 9) / 16 / 2) * 2; // 1080
 
 await mkdir("public/media/clips", { recursive: true });
 
@@ -53,16 +55,18 @@ await run("ffmpeg", [
   "-profile:v", "high",
   "-pix_fmt", "yuv420p",                   // the one Safari will decode
   /**
-   * 30, which is high for a hero and deliberate.
+   * 28 at full resolution, measured against the alternatives.
    *
    * Eighteen seconds of hard cuts, concert lighting and a drone pass is
-   * expensive footage: at the usual 25 this file came out at 6MB. Compared
-   * side by side at 1:1 against 1440/crf28, this is indistinguishable — on a
-   * surface that is always moving and sits under a heavy scrim, the pixels
-   * buy more than the bitrate does. It lands at ~3.4MB, which is where the
-   * old (shorter) hero sat per second of footage.
+   * expensive footage. The options that land in the same weight class are
+   * 1920/crf28 at 5.8MB and 1600/crf26 at 5.4MB; compared at 1:1 the native
+   * encode holds number plates, print on a door and reflections that the
+   * upscaled 1600 loses. Going further (1920/crf26) costs another 1.4MB for a
+   * difference that does not survive the scrim.
+   *
+   * Phones never see this file — they get the cut below.
    */
-  "-crf", "30",
+  "-crf", "28",
   // The cuts in this edit are hard and frequent; scene detection puts a
   // keyframe on each one instead of predicting the first frames of a new shot
   // from the last frames of an unrelated one.
@@ -80,14 +84,16 @@ await run("ffmpeg", [
  *
  *   -maxrate/-bufsize   a hard ceiling, because CRF alone lets a busy shot
  *                       (the concert, the parade) spike well past the average
- *   704px               below any phone's 3x DPR, but this sits behind a heavy
- *                       scrim and moves constantly — nobody reads its detail
+ *   832px               below any phone's 3x DPR, but this sits behind a heavy
+ *                       scrim and moves constantly. It was 704; the hero is the
+ *                       one thing on the page that has to look expensive, and
+ *                       this is the cheapest place to buy that back.
  *   fps 24              one frame in 25 nobody sees, ~4% off for free
  *
  * The ceiling is what actually binds here: at eighteen seconds it is the
  * difference between roughly half a megabyte and well over one.
  */
-const SMALL_W = 704;
+const SMALL_W = 832;
 const SMALL_H = Math.round((SMALL_W * 9) / 16 / 2) * 2;
 await run("ffmpeg", [
   "-y",
@@ -98,17 +104,18 @@ await run("ffmpeg", [
   "-profile:v", "high",
   "-pix_fmt", "yuv420p",
   /**
-   * The ceiling, not the CRF, is what sets this file's size — and the film got
-   * half again as long when the real intro replaced the stand-in reel. At 200k
-   * it came to 449KB and cost the homepage five Lighthouse points, because on
-   * a throttled phone it is downloading in the same window as the LCP. 150k
-   * brings it back to roughly what the shorter loop used to weigh. It is a
-   * 704px surface under a heavy scrim that never stops moving; the difference
-   * is not visible, the half second is.
+   * The ceiling, not the CRF, is what sets this file's size.
+   *
+   * It went 200k, then down to 150k on the suspicion that it was costing the
+   * homepage Lighthouse points. Measuring killed that suspicion: dropping
+   * 109KB moved the LCP not at all, because the LCP here is the hero's own
+   * load animation finishing, not this file arriving. So the ceiling went back
+   * up — 220k buys a visibly cleaner picture on a phone for bytes that were
+   * not paying for speed anyway.
    */
-  "-crf", "32",
-  "-maxrate", "150k",
-  "-bufsize", "300k",
+  "-crf", "30",
+  "-maxrate", "220k",
+  "-bufsize", "440k",
   "-preset", "slow",
   "-movflags", "+faststart",
   OUT_SMALL,

@@ -28,7 +28,7 @@ export default function Voorwaarden() {
         ingeschreven bij de Kamer van Koophandel onder nummer {site.entity.kvk}.
       </p>
 
-      <h2>Artikel 1 — Definities</h2>
+      <h2>Artikel 1. Definities</h2>
       <dl>
         <dt>Videoproductiebedrijf</dt>
         <dd>
@@ -50,7 +50,7 @@ export default function Voorwaarden() {
         <dd>Het definitieve resultaat zoals vooraf gedefinieerd in de overeenkomst.</dd>
       </dl>
 
-      <h2>Artikel 2 — Toepasselijkheid</h2>
+      <h2>Artikel 2. Toepasselijkheid</h2>
       <ul>
         <li>
           Door gebruik te maken van de diensten van {site.name} aanvaardt de klant deze algemene
@@ -66,34 +66,34 @@ export default function Voorwaarden() {
         </li>
       </ul>
 
-      <h2>Artikel 3 — Aanbod, offertes en tarieven</h2>
+      <h2>Artikel 3. Aanbod, offertes en tarieven</h2>
       <ul>
         <li>Offertes en prijsvoorstellen hebben een geldigheidsduur van 14 dagen, tenzij anders vermeld.</li>
         <li>Alle tarieven zijn exclusief btw en bijkomende kosten.</li>
         <li>Extra kosten kunnen in rekening worden gebracht voor aanvullende werkzaamheden.</li>
       </ul>
 
-      <h2>Artikel 4 — Uitvoering van de opdracht</h2>
+      <h2>Artikel 4. Uitvoering van de opdracht</h2>
       <ul>
         <li>{site.name} zal de opdracht met de grootst mogelijke zorg uitvoeren.</li>
         <li>Weersomstandigheden en technische beperkingen kunnen invloed hebben op het eindresultaat.</li>
       </ul>
 
-      <h2>Artikel 5 — Leveringsvoorwaarden</h2>
+      <h2>Artikel 5. Leveringsvoorwaarden</h2>
       <ul>
         <li>De standaard leveringstermijn bedraagt maximaal 4 weken, tenzij anders overeengekomen.</li>
         <li>De klant heeft recht op één feedbackronde binnen 5 werkdagen na levering.</li>
         <li>Extra feedbackrondes kunnen tegen meerprijs worden aangeboden.</li>
       </ul>
 
-      <h2>Artikel 6 — Betalingsvoorwaarden</h2>
+      <h2>Artikel 6. Betalingsvoorwaarden</h2>
       <ul>
         <li>Facturen dienen binnen 14 dagen na factuurdatum te worden voldaan.</li>
         <li>Bij te late betaling wordt wettelijke rente vermeerderd met 2% in rekening gebracht.</li>
         <li>Alle incassokosten die voortvloeien uit te late betaling zijn voor rekening van de klant.</li>
       </ul>
 
-      <h2>Artikel 7 — Auteursrecht en licenties</h2>
+      <h2>Artikel 7. Auteursrecht en licenties</h2>
       <ul>
         <li>
           Het auteursrecht op alle gemaakte content blijft bij {site.name}, tenzij schriftelijk
@@ -105,7 +105,7 @@ export default function Voorwaarden() {
         </li>
       </ul>
 
-      <h2>Artikel 8 — Annulering en wijzigingen</h2>
+      <h2>Artikel 8. Annulering en wijzigingen</h2>
       <ul>
         <li>Annuleringen dienen schriftelijk te worden gemeld.</li>
         <li>
@@ -115,7 +115,7 @@ export default function Voorwaarden() {
         <li>Wijzigingen in de opdracht kunnen gevolgen hebben voor de planning, levertijd en prijs.</li>
       </ul>
 
-      <h2>Artikel 9 — Aansprakelijkheid</h2>
+      <h2>Artikel 9. Aansprakelijkheid</h2>
       <ul>
         <li>
           {site.name} is niet aansprakelijk voor indirecte schade, gevolgschade of gederfde
