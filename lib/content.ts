@@ -14,6 +14,22 @@ export const site = {
   phone: "+31 6 22 82 99 16",
   phoneHref: "+31622829916",
   address: "Tappersweg 14-011, 2031 EV Haarlem",
+  /**
+   * The registered company behind the brand.
+   *
+   * "The SPOT" is what the site says everywhere; the entity that signs
+   * contracts and is on file at the Kamer van Koophandel is still SPOT post &
+   * video Producties. The legal pages name both, once, and then use the brand
+   * — terms that name a company nobody recognises are as unhelpful as terms
+   * that name one that does not legally exist.
+   *
+   * TODO (Beer): laat "The SPOT" als handelsnaam bijschrijven bij de KvK als
+   * dat nog niet is gebeurd.
+   */
+  entity: {
+    name: "SPOT post & video Producties",
+    kvk: "96981547",
+  },
   socials: [
     { label: "LinkedIn", href: "https://linkedin.com" }, // TODO: real profile
     { label: "Instagram", href: "https://instagram.com" }, // TODO: real profile
@@ -290,20 +306,26 @@ export const about = {
    */
   portrait: {
     src: "/media/about/beer.jpg",
-    alt: "Beer van The SPOT",
-    /**
-     * TODO: bevestig achternaam en functietitel. "Beer" komt uit het
-     * e-mailadres in `site`; de rest is bewust niet ingevuld in plaats van
-     * geraden, want een verzonnen functie op een over-onspagina is erger dan
-     * geen functie.
-     */
-    caption: "Beer",
+    alt: "Beer Dikkeboom, oprichter van The SPOT",
+    name: "Beer Dikkeboom",
+    role: "Oprichter en eigenaar",
   },
+  /**
+   * Beer's own words, from the about page of spotvideoproducties.nl — first
+   * person on purpose. The rest of the site speaks as "wij", and it should:
+   * a client hires a studio. But the one place where a founder's face is on
+   * the page is the one place where "ik" is the honest pronoun, and a story
+   * that starts at fifteen is worth more than another paragraph of we-make-
+   * beautiful-images.
+   *
+   * Only the company name is changed, to the brand this site carries.
+   */
   story: {
     title: "Creatie, groei en ondernemerschap",
     body: [
-      "Sterke content doet meer dan opvallen. Het vertelt jouw verhaal, versterkt je merk en laat een blijvende indruk achter. Daarom beginnen we nooit bij de camera, maar bij wat je wilt bereiken — bij jouw visie, je doelgroep en je doel.",
-      "Vanuit Haarlem draaien we door het hele land: bedrijfsfilms, aftermovies, commercials, portretten en social content. Concept, opname, montage, kleur en muziek zitten onder één dak, dus je hebt één aanspreekpunt en geen partijen die naar elkaar wijzen.",
+      "Mijn naam is Beer Dikkeboom, oprichter en eigenaar van The SPOT. In januari 2023 ben ik op 15-jarige leeftijd gestart met mijn eerste onderneming. Vanaf het begin heb ik één ding altijd in mijn achterhoofd gehouden: knie afvegen en doorgaan. Die mentaliteit vormt de basis voor waar The SPOT vandaag staat.",
+      "Ondernemen zit in mijn bloed. Ik ben continu bezig met het bouwen, verbeteren en laten groeien van ideeën. Wat begon als een idee is uitgegroeid tot een bedrijf met een breed scala aan klanten, verspreid door heel Nederland en ook daarbuiten.",
+      "Ik werk dagelijks aan producties waarin beeld, verhaal en kwaliteit samenkomen. Naast The SPOT ben ik betrokken bij meerdere bedrijven en ben ik aandeelhouder in verschillende startups, waarbij groei en ontwikkeling centraal staan.",
     ],
   },
   /** Condensed from the wel/niet section, so the two never contradict. */
@@ -356,4 +378,5 @@ export const contact = {
 export const legal = [
   { label: "Privacy", href: "/privacy" },
   { label: "Algemene voorwaarden", href: "/voorwaarden" },
+  { label: "Disclaimer", href: "/disclaimer" },
 ] as const;

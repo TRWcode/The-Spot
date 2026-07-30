@@ -14,12 +14,15 @@ export const metadata: Metadata = {
  * fonts, no analytics and no tracking cookies. If any of that changes, this
  * page has to change with it.
  *
- * TODO (Beer): vul de bedrijfsgegevens hieronder aan — KvK-nummer, en de
- * bewaartermijn die je zelf aanhoudt. De rest klopt met de techniek.
+ * Deliberately kept over the generic statement supplied with the terms and the
+ * disclaimer. That one announces the processing of "IP-adres, browserinformatie
+ * en bezoekgedrag", which this site does not do — claiming to collect data you
+ * do not collect is its own kind of inaccurate. The company details from it are
+ * merged in below.
  */
 export default function Privacy() {
   return (
-    <LegalPage eyebrow="Juridisch" title="Privacyverklaring" updated="2026-07-29">
+    <LegalPage eyebrow="Juridisch" title="Privacyverklaring" updated="2026-07-30">
       <p>
         {site.name} verwerkt persoonsgegevens van bezoekers van deze website en van klanten. Deze
         verklaring legt uit welke gegevens dat zijn, waarom we ze verwerken en hoe lang we ze
@@ -28,10 +31,11 @@ export default function Privacy() {
 
       <h2>Wie is verantwoordelijk</h2>
       <p>
-        {site.name}, {site.address}. Vragen over je gegevens kun je stellen via{" "}
-        <a href={`mailto:${site.email}`}>{site.email}</a> of {site.phone}.
+        {site.name} is een handelsnaam van {site.entity.name}, gevestigd aan {site.address} en
+        ingeschreven bij de Kamer van Koophandel onder nummer {site.entity.kvk}. Vragen over je
+        gegevens kun je stellen via <a href={`mailto:${site.email}`}>{site.email}</a> of{" "}
+        <a href={`tel:${site.phoneHref}`}>{site.phone}</a>.
       </p>
-      <p className="legal-todo">Nog aan te vullen: KvK-nummer en btw-identificatienummer.</p>
 
       <h2>Het contactformulier</h2>
       <p>
@@ -45,7 +49,13 @@ export default function Privacy() {
         wordt daar verwerkt om het bij ons af te leveren. We slaan formulierinzendingen niet op in
         een database — ze komen binnen als e-mail en blijven in onze mailbox staan.
       </p>
-      <p className="legal-todo">Nog aan te vullen: hoe lang je e-mail van aanvragen bewaart.</p>
+      <h2>Hoe lang we gegevens bewaren</h2>
+      <p>
+        We bewaren persoonsgegevens niet langer dan nodig is voor het doel waarvoor ze zijn
+        verzameld, tenzij we wettelijk verplicht zijn ze langer te bewaren — voor de administratie
+        geldt bijvoorbeeld de fiscale bewaarplicht van zeven jaar. Een aanvraag die niet tot een
+        opdracht leidt, verwijderen we uit onze mailbox zodra het contact is afgerond.
+      </p>
 
       <h2>Cookies</h2>
       <p>

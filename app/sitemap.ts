@@ -21,6 +21,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly" as const,
       priority: 0.8,
     })),
+    // Privacy, voorwaarden en disclaimer — alle drie uit `legal`, dus een
+    // vierde juridische pagina komt hier vanzelf in.
     ...legal.map((l) => ({
       url: `${SITE_URL}${l.href}`,
       lastModified: now,

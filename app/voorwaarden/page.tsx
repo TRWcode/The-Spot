@@ -9,114 +9,130 @@ export const metadata: Metadata = {
 };
 
 /**
- * A working scaffold, not finished legal advice.
+ * The client's own terms, vastgesteld 5 maart 2025, set in this site's type.
  *
- * The clauses below are the ones a video production actually needs — usage
- * rights, revision rounds, cancellation, footage retention — but the numbers in
- * them are placeholders, and terms are only binding if they are supplied before
- * the agreement is signed.
+ * This replaced a scaffold written here with placeholder numbers and a visible
+ * "nog niet juridisch getoetst" banner. Nothing substantive is changed: the
+ * articles, the periods and the amounts are exactly as supplied. The only edit
+ * is the company name, which now names the brand and the registered entity
+ * together — see `site.entity`.
  *
- * TODO (Beer): laat deze tekst nakijken en vul de gemarkeerde bedragen en
- * termijnen in. Zolang dat niet gebeurd is, verwijs in offertes niet naar deze
- * pagina.
+ * Terms only bind if they are supplied before the agreement is signed, so link
+ * to this page from offertes rather than relying on it being findable.
  */
 export default function Voorwaarden() {
   return (
-    <LegalPage eyebrow="Juridisch" title="Algemene voorwaarden" updated="2026-07-29">
-      <p className="legal-todo">
-        Deze voorwaarden staan klaar als concept. Ze zijn nog niet juridisch getoetst en de
-        gemarkeerde bedragen en termijnen moeten nog ingevuld worden.
+    <LegalPage eyebrow="Juridisch" title="Algemene voorwaarden" updated="2025-03-05">
+      <p>
+        {site.name} is een handelsnaam van {site.entity.name}, gevestigd aan {site.address} en
+        ingeschreven bij de Kamer van Koophandel onder nummer {site.entity.kvk}.
       </p>
 
-      <h2>1. Wie we zijn</h2>
-      <p>
-        Deze voorwaarden gelden voor alle offertes, opdrachten en leveringen van {site.name},
-        gevestigd aan {site.address}.
-      </p>
+      <h2>Artikel 1 — Definities</h2>
+      <dl>
+        <dt>Videoproductiebedrijf</dt>
+        <dd>
+          {site.entity.name}, handelend onder de naam {site.name}, gevestigd aan {site.address},
+          geregistreerd onder KvK-nummer {site.entity.kvk}.
+        </dd>
+        <dt>Klant</dt>
+        <dd>
+          Iedere natuurlijke of rechtspersoon die gebruik maakt van de diensten van {site.name}.
+        </dd>
+        <dt>Opdracht</dt>
+        <dd>Het verzoek van de klant om tegen betaling werkzaamheden te verrichten.</dd>
+        <dt>Overeenkomst</dt>
+        <dd>
+          De rechtsgeldige verbintenis tussen de klant en {site.name} met betrekking tot de
+          opdracht.
+        </dd>
+        <dt>Eindproduct</dt>
+        <dd>Het definitieve resultaat zoals vooraf gedefinieerd in de overeenkomst.</dd>
+      </dl>
 
-      <h2>2. Offertes</h2>
-      <p>
-        Een offerte is vrijblijvend en dertig dagen geldig. Prijzen zijn exclusief btw. Wat niet in
-        de offerte staat, valt niet binnen de opdracht — meerwerk stemmen we vooraf af en
-        offreren we apart.
-      </p>
+      <h2>Artikel 2 — Toepasselijkheid</h2>
+      <ul>
+        <li>
+          Door gebruik te maken van de diensten van {site.name} aanvaardt de klant deze algemene
+          voorwaarden.
+        </li>
+        <li>
+          Deze voorwaarden zijn van toepassing op alle rechtsverhoudingen tussen {site.name} en de
+          klant.
+        </li>
+        <li>
+          Afwijkingen van deze voorwaarden zijn uitsluitend geldig indien deze schriftelijk zijn
+          overeengekomen.
+        </li>
+      </ul>
 
-      <h2>3. Planning en medewerking</h2>
-      <p>
-        Opnamedata leggen we samen vast. Voor het draaien hebben we toegang tot de locatie,
-        contactpersonen en eventueel benodigde toestemmingen nodig; loopt dat vertraging op, dan
-        schuift de oplevering mee. Een opnamedag die binnen{" "}
-        <span className="legal-todo-inline">[termijn]</span> voor aanvang wordt afgezegd, brengen we
-        voor <span className="legal-todo-inline">[percentage]</span> in rekening, omdat de dag dan
-        niet meer opnieuw is in te plannen.
-      </p>
+      <h2>Artikel 3 — Aanbod, offertes en tarieven</h2>
+      <ul>
+        <li>Offertes en prijsvoorstellen hebben een geldigheidsduur van 14 dagen, tenzij anders vermeld.</li>
+        <li>Alle tarieven zijn exclusief btw en bijkomende kosten.</li>
+        <li>Extra kosten kunnen in rekening worden gebracht voor aanvullende werkzaamheden.</li>
+      </ul>
 
-      <h2>4. Montage en feedbackrondes</h2>
-      <p>
-        Bij de opdracht horen twee feedbackrondes op de montage. Feedback verzamelt de
-        opdrachtgever en levert die in één keer aan. Verdere rondes en wijzigingen die het concept
-        raken, rekenen we af op nacalculatie tegen{" "}
-        <span className="legal-todo-inline">[uurtarief]</span> per uur.
-      </p>
+      <h2>Artikel 4 — Uitvoering van de opdracht</h2>
+      <ul>
+        <li>{site.name} zal de opdracht met de grootst mogelijke zorg uitvoeren.</li>
+        <li>Weersomstandigheden en technische beperkingen kunnen invloed hebben op het eindresultaat.</li>
+      </ul>
 
-      <h2>5. Oplevering en goedkeuring</h2>
-      <p>
-        We leveren digitaal op, in de formaten die in de offerte staan. Als er binnen veertien dagen
-        na oplevering geen reactie is, geldt het werk als goedgekeurd.
-      </p>
+      <h2>Artikel 5 — Leveringsvoorwaarden</h2>
+      <ul>
+        <li>De standaard leveringstermijn bedraagt maximaal 4 weken, tenzij anders overeengekomen.</li>
+        <li>De klant heeft recht op één feedbackronde binnen 5 werkdagen na levering.</li>
+        <li>Extra feedbackrondes kunnen tegen meerprijs worden aangeboden.</li>
+      </ul>
 
-      <h2>6. Gebruiksrecht</h2>
-      <p>
-        Na volledige betaling krijgt de opdrachtgever het recht om het opgeleverde materiaal
-        onbeperkt in tijd te gebruiken voor de doelen die in de offerte staan. Gebruik daarbuiten —
-        bijvoorbeeld betaalde advertenties of doorverkoop aan derden — spreken we apart af.
-      </p>
+      <h2>Artikel 6 — Betalingsvoorwaarden</h2>
+      <ul>
+        <li>Facturen dienen binnen 14 dagen na factuurdatum te worden voldaan.</li>
+        <li>Bij te late betaling wordt wettelijke rente vermeerderd met 2% in rekening gebracht.</li>
+        <li>Alle incassokosten die voortvloeien uit te late betaling zijn voor rekening van de klant.</li>
+      </ul>
 
-      <h2>7. Auteursrecht en portfolio</h2>
-      <p>
-        Het auteursrecht op het werk blijft bij {site.name}. We mogen het opgeleverde werk tonen in
-        ons portfolio en op onze socials, tenzij vooraf schriftelijk anders is afgesproken.
-      </p>
+      <h2>Artikel 7 — Auteursrecht en licenties</h2>
+      <ul>
+        <li>
+          Het auteursrecht op alle gemaakte content blijft bij {site.name}, tenzij schriftelijk
+          anders overeengekomen.
+        </li>
+        <li>
+          De klant mag het geleverde materiaal niet zonder schriftelijke toestemming bewerken,
+          doorverkopen of gebruiken voor andere doeleinden dan afgesproken.
+        </li>
+      </ul>
 
-      <h2>8. Ruwe beelden</h2>
-      <p>
-        Ruw en ongebruikt materiaal maakt geen deel uit van de levering. We bewaren het{" "}
-        <span className="legal-todo-inline">[bewaartermijn]</span> na oplevering; daarna kan het
-        worden gewist. Wil je het ruwe materiaal in handen krijgen, dan is dat een aparte afspraak.
-      </p>
+      <h2>Artikel 8 — Annulering en wijzigingen</h2>
+      <ul>
+        <li>Annuleringen dienen schriftelijk te worden gemeld.</li>
+        <li>
+          Bij annulering binnen 48 uur voor aanvang van de opdracht wordt het volledige bedrag in
+          rekening gebracht.
+        </li>
+        <li>Wijzigingen in de opdracht kunnen gevolgen hebben voor de planning, levertijd en prijs.</li>
+      </ul>
 
-      <h2>9. Betaling</h2>
-      <p>
-        Betaling binnen veertien dagen na factuurdatum. Bij opdrachten boven{" "}
-        <span className="legal-todo-inline">[bedrag]</span> factureren we een aanbetaling van{" "}
-        <span className="legal-todo-inline">[percentage]</span> voor aanvang. Bij te late betaling
-        zijn de wettelijke handelsrente en incassokosten verschuldigd.
-      </p>
+      <h2>Artikel 9 — Aansprakelijkheid</h2>
+      <ul>
+        <li>
+          {site.name} is niet aansprakelijk voor indirecte schade, gevolgschade of gederfde
+          inkomsten.
+        </li>
+        <li>
+          In geval van overmacht, waaronder ziekte, weersomstandigheden, technische storingen of
+          andere onvoorziene omstandigheden, worden beide partijen ontslagen van hun verplichtingen.
+        </li>
+        <li>
+          De aansprakelijkheid van {site.name} is in alle gevallen beperkt tot het factuurbedrag van
+          de betreffende opdracht.
+        </li>
+      </ul>
 
-      <h2>10. Aansprakelijkheid</h2>
-      <p>
-        Onze aansprakelijkheid is beperkt tot het factuurbedrag van de betreffende opdracht.
-        Gevolgschade, gemiste omzet en gemiste besparingen vallen daarbuiten. Deze beperking geldt
-        niet bij opzet of bewuste roekeloosheid.
-      </p>
-
-      <h2>11. Overmacht</h2>
-      <p>
-        Bij ziekte, weer dat opnames onmogelijk maakt of uitval van apparatuur zoeken we samen een
-        nieuwe datum. Kan de opdracht daardoor helemaal niet doorgaan, dan rekenen we alleen af wat
-        er tot dat moment daadwerkelijk is gedaan.
-      </p>
-
-      <h2>12. Toepasselijk recht</h2>
-      <p>
-        Op alle opdrachten is Nederlands recht van toepassing. Geschillen leggen we voor aan de
-        bevoegde rechter in het arrondissement waar {site.name} is gevestigd.
-      </p>
-
-      <h2>Vragen</h2>
-      <p>
-        Iets onduidelijk? Mail <a href={`mailto:${site.email}`}>{site.email}</a> of bel {site.phone}.
-      </p>
+      <h2>Vaststellingsdatum</h2>
+      <p>Deze algemene voorwaarden zijn vastgesteld op 5 maart 2025 te Haarlem.</p>
     </LegalPage>
   );
 }

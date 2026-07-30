@@ -1404,6 +1404,68 @@
     text-underline-offset: 3px;
   }
 
+  /* Terms are written as clauses, so they are marked up as lists — and the
+     reset strips list styling, which would run nine articles together into
+     undifferentiated prose. The marker is a hairline rather than a bullet:
+     same rhythm as the rest of the site, and it survives the narrow measure. */
+  .legal-prose ul,
+  .legal-prose ol {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .legal-prose li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+  }
+  .legal-prose li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 10px;
+    height: 1px;
+    background: var(--color-line);
+  }
+  .legal-prose ol {
+    counter-reset: clause;
+  }
+  .legal-prose ol > li {
+    counter-increment: clause;
+  }
+  .legal-prose ol > li::before {
+    content: counter(clause) ".";
+    top: 0;
+    width: auto;
+    height: auto;
+    background: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  /* Definitions: the term carries the weight, the description sits under it. */
+  .legal-prose dl {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .legal-prose dt {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .legal-prose dd {
+    margin-top: 3px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+  }
+
   /* Unfinished passages, marked so they cannot quietly ship as if they were
      final. Not colour alone: the label carries the meaning. */
   .legal-todo {

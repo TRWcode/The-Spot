@@ -67,9 +67,14 @@ export default function AboutPage() {
                 )}
               </div>
               {hasPortrait && (
-                <figcaption className="mt-4 flex items-center gap-3 text-[15px]">
-                  <span className="grad-rule w-8 shrink-0" aria-hidden />
-                  {about.portrait.caption}
+                <figcaption className="mt-5 flex items-start gap-3">
+                  <span className="grad-rule mt-3 w-8 shrink-0" aria-hidden />
+                  <span>
+                    <span className="block font-display text-[17px] font-medium">
+                      {about.portrait.name}
+                    </span>
+                    <span className="mt-0.5 block text-[15px] text-ink-2">{about.portrait.role}</span>
+                  </span>
                 </figcaption>
               )}
             </figure>
