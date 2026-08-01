@@ -156,7 +156,12 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
 
   // Honeypot: a real person never fills a field they cannot see. Answer with
   // success so bots get no signal about why they failed.
-  if (str(formData.get("company"))) {
+  //
+  // Logged, because this branch throws a message away while telling the sender
+  // it arrived. If that ever happens to a real visitor — a browser autofilling
+  // the hidden field, say — the log is the only trace there would be.
+  if (str(formData.get("onderwerp"))) {
+    console.warn("[contact] Honeypot filled — treated as a bot, message not sent.");
     return { ok: true, message: "Bericht verstuurd. Je hoort snel van ons." };
   }
 
@@ -190,6 +195,9 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
     .update(`${email.length}:${email}${message}`)
     .digest("hex");
   if (!hit(`dupe:${fingerprint}`, [{ max: 1, ms: DUPLICATE_MS }]).ok) {
+    // Same reason as the honeypot: a success message over a message that was
+    // not sent needs to leave a trace somewhere.
+    console.warn("[contact] Duplicate within the window — not sent a second time.");
     return { ok: true, message: "Bericht verstuurd. Je hoort snel van ons." };
   }
 
@@ -210,7 +218,7 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
   }
 
   const sent = await deliver(
-    `Nieuw bericht via thespot.nl — ${name}`,
+    `Nieuw bericht via thespotproducties.nl — ${name}`,
     [
       `Naam:     ${name}`,
       `E-mail:   ${email}`,

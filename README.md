@@ -78,8 +78,9 @@ Blokkerend voor livegang:
       staan als `TODO` gemarkeerd.
 - [ ] **Social-URL's.** De drie links in `lib/content.ts` wijzen naar
       `linkedin.com` / `instagram.com` / `tiktok.com`.
-- [ ] **Domein.** Zet `NEXT_PUBLIC_SITE_URL`; `lib/site-url.ts` valt anders terug
-      op `thespot.nl` (en pakt op Vercel automatisch de productie-URL).
+- [ ] **Domein.** Zet `NEXT_PUBLIC_SITE_URL` op `https://thespotproducties.nl`;
+      `lib/site-url.ts` valt anders terug op diezelfde waarde (en pakt op Vercel
+      automatisch de productie-URL).
 - [ ] **Juridische pagina's.** `/privacy` en `/voorwaarden` staan er, met de
       onaffe passages zichtbaar gemarkeerd. KvK-nummer, bewaartermijnen en de
       bedragen in de voorwaarden moeten ingevuld en nagekeken worden.
