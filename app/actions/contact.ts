@@ -1,6 +1,9 @@
 "use server";
 
+import { createHash } from "node:crypto";
+import { headers } from "next/headers";
 import { site } from "@/lib/content";
+import { hit } from "@/lib/rate-limit";
 
 /**
  * Contact form handler.
@@ -13,10 +16,13 @@ import { site } from "@/lib/content";
  * extra dependency to install or keep updated. To switch providers, replace
  * `deliver()` and nothing else.
  *
- * SETUP (one env var):
+ * SETUP:
  *   RESEND_API_KEY=re_xxx        from resend.com
- *   CONTACT_FROM="The SPOT <formulier@dikkeboomspotproducties.nl>"
- * The from-domain must be verified in Resend, otherwise the API rejects it.
+ *   CONTACT_FROM="The SPOT <thespot@stapit.com>"
+ *   CONTACT_TO=beer@...          optional, defaults to site.email
+ *
+ * Only the from-domain needs to be verified in Resend; the recipient can be
+ * any address. That is what lets one verified domain serve every client site.
  * Without the key the action refuses cleanly rather than pretending it sent.
  */
 
@@ -31,13 +37,70 @@ export type ContactState = {
 
 const MAX = { name: 100, email: 200, phone: 40, message: 4000 };
 
+const MINUTE = 60_000;
+const HOUR = 60 * MINUTE;
+
+/**
+ * Two tiers, because they defend different things.
+ *
+ * `ATTEMPTS` is checked before anything else and is deliberately loose: it
+ * exists so a flood of junk cannot keep the function busy, and it has to leave
+ * room for a real person mistyping their email a few times.
+ *
+ * `SENDS` is checked at the last moment, so only submissions that were going
+ * to become an email count against it. That is what keeps the inbox — and the
+ * Resend quota — from being drained by one client.
+ *
+ * `GLOBAL` is the backstop for the case the per-IP limits cannot see: many
+ * addresses, a few messages each.
+ */
+const LIMITS = {
+  attempts: [{ max: 15, ms: 10 * MINUTE }],
+  sends: [
+    { max: 3, ms: 10 * MINUTE },
+    { max: 8, ms: HOUR },
+  ],
+  global: [{ max: 60, ms: HOUR }],
+};
+
+/** How long an identical message is treated as a double-click rather than news. */
+const DUPLICATE_MS = 10 * MINUTE;
+
+/** A hung provider must not hold the request — and the visitor — open. */
+const DELIVER_TIMEOUT_MS = 10_000;
+
 function str(v: FormDataEntryValue | null): string {
   return typeof v === "string" ? v.trim() : "";
+}
+
+/**
+ * The client address, as far as it can be trusted.
+ *
+ * `x-forwarded-for` is a client-settable header everywhere except behind a
+ * proxy that overwrites it, which Vercel does — the real address is the first
+ * entry and the rest are hops. Self-hosted behind something that does not
+ * rewrite it, this is spoofable and the limit degrades to honour-system.
+ */
+async function clientKey() {
+  const h = await headers();
+  const forwarded = h.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return forwarded || h.get("x-real-ip") || "unknown";
+}
+
+function tooManyMessage(retryAfterMs: number) {
+  const minutes = Math.max(1, Math.ceil(retryAfterMs / MINUTE));
+  return (
+    `Je hebt net al een bericht gestuurd. Probeer het over ${minutes} ` +
+    `${minutes === 1 ? "minuut" : "minuten"} nog eens, of mail direct naar ${site.email}.`
+  );
 }
 
 async function deliver(subject: string, text: string, replyTo: string) {
   const key = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM;
+  // Env-var first so this file can be reused for another client without a
+  // code change; site.email keeps it working when nobody sets it.
+  const to = process.env.CONTACT_TO || site.email;
 
   if (!key || !from) {
     // Loud, not silent: a form that looks like it worked but dropped the
@@ -46,29 +109,45 @@ async function deliver(subject: string, text: string, replyTo: string) {
     return false;
   }
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${key}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [site.email],
-      reply_to: replyTo,
-      subject,
-      text,
-    }),
-  });
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        reply_to: replyTo,
+        subject,
+        text,
+      }),
+      signal: AbortSignal.timeout(DELIVER_TIMEOUT_MS),
+    });
 
-  if (!res.ok) {
-    console.error("[contact] Resend rejected the message:", res.status, await res.text());
+    if (!res.ok) {
+      console.error("[contact] Resend rejected the message:", res.status, await res.text());
+      return false;
+    }
+    return true;
+  } catch (err) {
+    // A timeout or a network fault. Reported as a failure, which sends the
+    // visitor to the direct address rather than leaving them on a spinner.
+    console.error("[contact] Delivery failed:", err);
     return false;
   }
-  return true;
 }
 
 export async function sendContact(_prev: ContactState, formData: FormData): Promise<ContactState> {
+  const who = await clientKey();
+
+  // Before any work: a flood should cost this function as little as possible.
+  const attempt = hit(`attempt:${who}`, LIMITS.attempts);
+  if (!attempt.ok) {
+    return { ok: false, message: tooManyMessage(attempt.retryAfterMs) };
+  }
+
   const name = str(formData.get("name"));
   const email = str(formData.get("email"));
   const phone = str(formData.get("phone"));
@@ -77,7 +156,12 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
 
   // Honeypot: a real person never fills a field they cannot see. Answer with
   // success so bots get no signal about why they failed.
-  if (str(formData.get("company"))) {
+  //
+  // Logged, because this branch throws a message away while telling the sender
+  // it arrived. If that ever happens to a real visitor — a browser autofilling
+  // the hidden field, say — the log is the only trace there would be.
+  if (str(formData.get("onderwerp"))) {
+    console.warn("[contact] Honeypot filled — treated as a bot, message not sent.");
     return { ok: true, message: "Bericht verstuurd. Je hoort snel van ons." };
   }
 
@@ -98,8 +182,43 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
     return { ok: false, message: "Controleer de gemarkeerde velden.", errors, values };
   }
 
+  // A double-click, a retried submit, or a bot replaying the same payload.
+  // Answered as success because the first one did go through — telling the
+  // visitor it failed would only make them send it a third time.
+  //
+  // The length prefix is what keeps the two fields apart: concatenated raw,
+  // "a@b.nl" + " hoi" and "a@b.nl " + "hoi" hash the same and one of the two
+  // would be swallowed as a duplicate. A separator character would do the same
+  // job, but any byte that cannot appear in the input is a byte that makes git
+  // treat this file as binary — and this is the last file you want undiffable.
+  const fingerprint = createHash("sha256")
+    .update(`${email.length}:${email}${message}`)
+    .digest("hex");
+  if (!hit(`dupe:${fingerprint}`, [{ max: 1, ms: DUPLICATE_MS }]).ok) {
+    // Same reason as the honeypot: a success message over a message that was
+    // not sent needs to leave a trace somewhere.
+    console.warn("[contact] Duplicate within the window — not sent a second time.");
+    return { ok: true, message: "Bericht verstuurd. Je hoort snel van ons." };
+  }
+
+  // Checked here rather than at the top so a typo in your own email never
+  // costs you one of the three real sends.
+  const send = hit(`send:${who}`, LIMITS.sends);
+  if (!send.ok) {
+    return { ok: false, message: tooManyMessage(send.retryAfterMs), values };
+  }
+
+  if (!hit("global", LIMITS.global).ok) {
+    console.warn("[contact] Global send limit reached — form is shedding load.");
+    return {
+      ok: false,
+      message: `Het formulier is even overbelast. Mail ons gerust direct op ${site.email}.`,
+      values,
+    };
+  }
+
   const sent = await deliver(
-    `Nieuw bericht via thespot.nl — ${name}`,
+    `Nieuw bericht via thespotproducties.nl — ${name}`,
     [
       `Naam:     ${name}`,
       `E-mail:   ${email}`,

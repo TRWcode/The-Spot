@@ -78,13 +78,17 @@ Blokkerend voor livegang:
       staan als `TODO` gemarkeerd.
 - [ ] **Social-URL's.** De drie links in `lib/content.ts` wijzen naar
       `linkedin.com` / `instagram.com` / `tiktok.com`.
-- [ ] **Domein.** Zet `NEXT_PUBLIC_SITE_URL`; `lib/site-url.ts` valt anders terug
-      op `thespot.nl` (en pakt op Vercel automatisch de productie-URL).
+- [ ] **Domein.** Zet `NEXT_PUBLIC_SITE_URL` op `https://thespotproducties.nl`;
+      `lib/site-url.ts` valt anders terug op diezelfde waarde (en pakt op Vercel
+      automatisch de productie-URL).
 - [ ] **Juridische pagina's.** `/privacy` en `/voorwaarden` staan er, met de
       onaffe passages zichtbaar gemarkeerd. KvK-nummer, bewaartermijnen en de
       bedragen in de voorwaarden moeten ingevuld en nagekeken worden.
 - [ ] **Contactformulier.** Werkt pas met `RESEND_API_KEY` en `CONTACT_FROM`
-      (zie `.env.example`). Zonder die twee weigert het bewust te versturen.
+      (zie `.env.example`), lokaal in `.env.local` én in Vercel. Zonder die
+      twee weigert het bewust te versturen. Afzender is `stapit.com` — alleen
+      dát domein hoeft geverifieerd te zijn, de ontvanger nergens voor
+      aangemeld, dus dezelfde opzet werkt voor elke klantsite.
 
 Beter maken zodra het materiaal er is:
 

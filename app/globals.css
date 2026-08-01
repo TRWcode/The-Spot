@@ -1279,17 +1279,17 @@
   }
 
   /* Honeypot — removed from view, from the tab order and from the a11y tree,
-     but still submitted, which is exactly what catches bots. */
+     but still submitted, which is exactly what catches bots.
+
+     `display: none` rather than the usual clip-path trick, because a
+     clipped field is still laid out and Chrome's autofill will happily
+     fill it — it ignores autocomplete="off" on anything it reads as an
+     address field. A real visitor then trips the honeypot and their
+     message is silently dropped behind a success message. Bots that fill
+     every input in the HTML are caught either way; the ones that render
+     CSS first skipped a clipped field too, so nothing is lost here. */
   .hp {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-    border: 0;
+    display: none;
   }
 
   /* --- Wel / niet switch -------------------------------------------- */

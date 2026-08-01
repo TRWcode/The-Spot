@@ -27,10 +27,15 @@ export function ContactForm({ className }: { className?: string }) {
   return (
     <form action={formAction} className={`form-card ${className ?? ""}`}>
       {/* Honeypot. Hidden from sight and from assistive tech, and taken out of
-          the tab order, so only a bot ever fills it. */}
+          the tab order, so only a bot ever fills it.
+
+          Deliberately not named "company", "url" or anything else a browser
+          maps to an autofill token: a field autofill recognises is a field it
+          will fill for a real visitor, and that visitor's message then gets
+          thrown away as spam. `.hp` is display:none for the same reason. */}
       <div className="hp" aria-hidden>
-        <label htmlFor="company">Bedrijf</label>
-        <input id="company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+        <label htmlFor="onderwerp">Onderwerp</label>
+        <input id="onderwerp" name="onderwerp" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       <div className="field">

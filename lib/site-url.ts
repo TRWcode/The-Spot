@@ -9,9 +9,10 @@
  * builds stop advertising themselves as production without anyone remembering
  * to change a constant.
  *
- * TODO: set NEXT_PUBLIC_SITE_URL to the real domain before launch.
+ * The literal is the real domain, so a build without either env var still
+ * advertises the right host rather than one nobody owns.
  */
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ??
-  "https://thespot.nl";
+  "https://thespotproducties.nl";
