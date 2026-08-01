@@ -84,11 +84,15 @@ Blokkerend voor livegang:
 - [ ] **Juridische pagina's.** `/privacy` en `/voorwaarden` staan er, met de
       onaffe passages zichtbaar gemarkeerd. KvK-nummer, bewaartermijnen en de
       bedragen in de voorwaarden moeten ingevuld en nagekeken worden.
-- [ ] **Contactformulier.** Werkt pas met `RESEND_API_KEY` en `CONTACT_FROM`
-      (zie `.env.example`), lokaal in `.env.local` én in Vercel. Zonder die
-      twee weigert het bewust te versturen. Afzender is `stapit.com` — alleen
-      dát domein hoeft geverifieerd te zijn, de ontvanger nergens voor
-      aangemeld, dus dezelfde opzet werkt voor elke klantsite.
+- [x] **Contactformulier.** Draait op Resend en staat ingesteld in Vercel.
+      Nodig zijn `RESEND_API_KEY` en `CONTACT_FROM` (`The SPOT
+      <thespot@stapit.com>`, zonder aanhalingstekens in Vercel); optioneel
+      `CONTACT_TO`, dat anders terugvalt op `site.email`. Zonder die eerste
+      twee weigert het formulier bewust te versturen in plaats van te doen
+      alsof. Alleen het afzenderdomein hoeft in Resend geverifieerd te zijn,
+      de ontvanger nergens — daarom bedient één domein alle klantsites.
+      Lokaal zet je dezelfde waarden in `.env.local`; dat bestand hoort
+      nergens in git, net als elk ander `.env`-bestand.
 
 Beter maken zodra het materiaal er is:
 
