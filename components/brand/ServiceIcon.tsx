@@ -16,7 +16,7 @@ import { useId } from "react";
  * base state.
  */
 
-type Variant = "film" | "camera" | "social";
+type Variant = "film" | "social";
 
 const STROKE = {
   fill: "none",
@@ -70,29 +70,10 @@ export function ServiceIcon({ variant, className }: { variant: Variant; classNam
         </>
       )}
 
-      {variant === "camera" && (
-        <>
-          <path d="M38 32 L42 24 L58 24 L62 32" {...STROKE} />
-          <rect x="10" y="32" width="80" height="42" rx="8" {...STROKE} />
-          <circle cx="50" cy="53" r="14" {...STROKE} />
-          {/* The iris opens and closes — a shutter, not a spinner. */}
-          <g data-anim="iris">
-            <path
-              d="M50 45 L57 49 L57 57 L50 61 L43 57 L43 49 Z"
-              fill="none"
-              stroke={`url(#${grad})`}
-              strokeWidth="2.4"
-              strokeLinejoin="round"
-            />
-          </g>
-          <circle cx="77" cy="42" r="2.6" fill="currentColor" opacity="0.32" />
-        </>
-      )}
-
       {variant === "social" && (
         <>
-          {/* Sized to sit in the same optical box as the film and camera marks
-              — at full height the phone read as the biggest of the three. */}
+          {/* Sized to sit in the same optical box as the film mark — at full
+              height the phone read as the bigger of the two. */}
           <rect x="35" y="20" width="30" height="60" rx="7" {...STROKE} />
           <path d="M45 26 H55" {...STROKE} />
           {/* Feed scrolls; pattern repeats every 28 units so the loop is seamless. */}

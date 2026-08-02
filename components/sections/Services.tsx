@@ -7,7 +7,7 @@ import { services } from "@/lib/content";
 import { resolveVideo } from "@/lib/video";
 
 /**
- * Three cards, kept deliberately quiet: white surfaces, hairline borders,
+ * Two cards, kept deliberately quiet: white surfaces, hairline borders,
  * no icon soup. The only gradient is the single accent inside each mark.
  *
  * While there is no service footage, the card leads with an animated line
@@ -24,7 +24,7 @@ export function Services() {
           <h2 className="mt-5 max-w-[18ch] text-h2">{services.title}</h2>
         </Reveal>
 
-        <Reveal stagger className="mt-16 grid gap-6 md:grid-cols-3" y={28}>
+        <Reveal stagger className="mt-16 grid gap-6 md:grid-cols-2" y={28}>
           {services.items.map((s) => {
             // Services carry no `clip` until real service footage exists, so
             // this resolves to poster-only and the animated mark is shown.
@@ -36,19 +36,19 @@ export function Services() {
                 key={s.title}
                 className="svc-card overflow-hidden rounded-card border border-line bg-paper"
               >
-                {/* The mark panel is shorter than the 4/3 video slot it stands
-                    in for: a line mark needs less room than footage, and 4/3
-                    left it adrift in white space. */}
+                {/* Two-up the cards are half the page wide, so the panel is
+                    kept wide and shallow: at 3/2 a 132px line mark floated in
+                    an empty field. Same reason the video slot is 16/9 here. */}
                 {posterOnly ? (
-                  <div className="svc-panel" style={{ aspectRatio: "3 / 2" }}>
+                  <div className="svc-panel" style={{ aspectRatio: "16 / 9" }}>
                     <ServiceIcon variant={s.icon} />
                   </div>
                 ) : (
                   <HoverVideo
                     asset={{ poster: s.poster, clip }}
                     alt={s.title}
-                    ratio="4 / 3"
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    ratio="16 / 9"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 )}
 

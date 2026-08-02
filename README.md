@@ -1,6 +1,6 @@
 # The SPOT — homepage
 
-Videoproductie | Social media content — Haarlem.
+Videoproductie | Social media content — Wormerveer.
 Rebrand van "Spot Video Producties" naar The SPOT.
 
 Next.js 16 (App Router) · TypeScript · Tailwind v4 · GSAP + Lenis · Vercel.
@@ -67,23 +67,32 @@ een paar besluiten van Beer**. Alle plekken staan gemarkeerd met `TODO`.
 
 Blokkerend voor livegang:
 
-- [ ] **"Vertrouwd door 120+ merken".** De balk toont nu de vier échte
-      klantlogo's (CLOK, De Groot, Khione, Kinderfysio). Het label erboven
-      claimt 120+ en is niet onderbouwd; `trust.clients` in `lib/content.ts`
-      bevat daarnaast nog een lijst voorbeeldnamen die alleen nog dient als
-      terugval wanneer er géén logo's zijn. Pas het label aan naar wat klopt,
-      en lever meer logo's als je meer wilt tonen.
+- [ ] **"Vertrouwd door 120+ merken".** De balk toont 15 échte klantlogo's. Het
+      label erboven claimt 120+ en is niet onderbouwd; `trust.clients` in
+      `lib/content.ts` bevat daarnaast nog een lijst voorbeeldnamen die alleen
+      dient als terugval wanneer er géén logo's zijn. Pas het label aan naar wat
+      klopt, of onderbouw het.
+- [ ] **E-mailadres.** `site.email` is `beer@dikkeboomspotproducties.nl`, een
+      adres op het oude merkdomein, terwijl de site op thespotproducties.nl
+      staat en de mails die het formulier stuurt dat domein in het onderwerp
+      noemen. Bevestigen of hier een adres op het nieuwe domein hoort.
 - [ ] **Case-teksten.** Alleen CLOK bevat Beers eigen woorden. De `situation` /
       `approach` / `result` van de andere drie zijn bewust generiek gehouden en
       staan als `TODO` gemarkeerd.
-- [ ] **Social-URL's.** De drie links in `lib/content.ts` wijzen naar
-      `linkedin.com` / `instagram.com` / `tiktok.com`.
-- [ ] **Domein.** Zet `NEXT_PUBLIC_SITE_URL` op `https://thespotproducties.nl`;
-      `lib/site-url.ts` valt anders terug op diezelfde waarde (en pakt op Vercel
-      automatisch de productie-URL).
-- [ ] **Juridische pagina's.** `/privacy` en `/voorwaarden` staan er, met de
-      onaffe passages zichtbaar gemarkeerd. KvK-nummer, bewaartermijnen en de
-      bedragen in de voorwaarden moeten ingevuld en nagekeken worden.
+- [ ] **Review op de homepage.** De quote van Pleunie Groen prijst "vette
+      foto's". Fotografie is per 02-08-2026 geen dienst meer; vervang de review
+      of accepteer de verwijzing bewust.
+- [x] **Social-URL's.** Wijzen naar de echte profielen. De Instagram- en
+      TikTok-handles zijn nog `spotvideoproducties`; die volgen de rebrand pas
+      als Beer ze omzet.
+- [x] **Domein.** `lib/site-url.ts` valt terug op `https://thespotproducties.nl`
+      en pakt op Vercel automatisch de productie-URL, dus
+      `NEXT_PUBLIC_SITE_URL` is optioneel.
+- [ ] **Juridische pagina's.** `/privacy` en `/voorwaarden` staan er met het
+      KvK-nummer ingevuld. De bewaartermijnen en de bedragen in de voorwaarden
+      zijn overgenomen zoals aangeleverd en nog niet juridisch nagekeken. De
+      vaststellingsregel onderaan de voorwaarden noemt nog Haarlem, wat klopte
+      op 5 maart 2025 maar niet meer bij het huidige vestigingsadres past.
 - [x] **Contactformulier.** Draait op Resend en staat ingesteld in Vercel.
       Nodig zijn `RESEND_API_KEY` en `CONTACT_FROM` (`The SPOT
       <thespot@stapit.com>`, zonder aanhalingstekens in Vercel); optioneel

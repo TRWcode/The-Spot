@@ -19,9 +19,10 @@ export const metadata: Metadata = {
  *
  * The portrait is the one asset this page is still waiting on, so its absence
  * is designed for rather than assumed away: the file is checked at build time
- * and the layout falls back to a branded panel. Drop the image at
- * public/media/about/team.jpg, rebuild, and it takes the slot — no code change
- * and, more to the point, no broken image if it is forgotten.
+ * and the layout falls back to a branded panel. Drop the original in
+ * assets-inbox/photos/beer.jpg, run scripts/make-photos.mjs, and it takes the
+ * slot — no code change and, more to the point, no broken image if it is
+ * forgotten.
  */
 export default function AboutPage() {
   const hasPortrait = existsSync(path.join(process.cwd(), "public", about.portrait.src));
@@ -74,6 +75,11 @@ export default function AboutPage() {
                       {about.portrait.name}
                     </span>
                     <span className="mt-0.5 block text-[15px] text-ink-2">{about.portrait.role}</span>
+                    {/* Zijn eigen motto, en daarom een citaat in plaats van
+                        nog een regel bijschrift. */}
+                    <span className="mt-3 block max-w-[34ch] text-[15px] italic leading-relaxed text-ink-2">
+                      “{about.portrait.quote}”
+                    </span>
                   </span>
                 </figcaption>
               )}

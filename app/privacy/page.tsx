@@ -10,9 +10,10 @@ export const metadata: Metadata = {
 
 /**
  * Written against what this site actually does, not from a generic template:
- * one contact form (Resend), YouTube embeds in nocookie mode, self-hosted
- * fonts, no analytics and no tracking cookies. If any of that changes, this
- * page has to change with it.
+ * one contact form (Resend), rate limiting op IP in `lib/rate-limit.ts`,
+ * hosting bij Vercel, YouTube embeds in nocookie mode achter een facade,
+ * self-hosted fonts, no analytics and no tracking cookies. If any of that
+ * changes, this page has to change with it.
  *
  * Deliberately kept over the generic statement supplied with the terms and the
  * disclaimer. That one announces the processing of "IP-adres, browserinformatie
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
  */
 export default function Privacy() {
   return (
-    <LegalPage eyebrow="Juridisch" title="Privacyverklaring" updated="2026-07-30">
+    <LegalPage eyebrow="Juridisch" title="Privacyverklaring" updated="2026-08-03">
       <p>
         {site.name} verwerkt persoonsgegevens van bezoekers van deze website en van klanten. Deze
         verklaring legt uit welke gegevens dat zijn, waarom we ze verwerken en hoe lang we ze
@@ -31,9 +32,8 @@ export default function Privacy() {
 
       <h2>Wie is verantwoordelijk</h2>
       <p>
-        {site.name} is een handelsnaam van {site.entity.name}, gevestigd aan {site.address} en
-        ingeschreven bij de Kamer van Koophandel onder nummer {site.entity.kvk}. Vragen over je
-        gegevens kun je stellen via <a href={`mailto:${site.email}`}>{site.email}</a> of{" "}
+        {site.name} is gevestigd aan {site.address} en ingeschreven bij de Kamer van Koophandel
+        onder nummer {site.kvk}. Vragen over je gegevens kun je stellen via <a href={`mailto:${site.email}`}>{site.email}</a> of{" "}
         <a href={`tel:${site.phoneHref}`}>{site.phone}</a>.
       </p>
 
@@ -49,6 +49,24 @@ export default function Privacy() {
         wordt daar verwerkt om het bij ons af te leveren. We slaan formulierinzendingen niet op in
         een database. Ze komen binnen als e-mail en blijven in onze mailbox staan.
       </p>
+
+      <h2>Misbruik van het formulier tegengaan</h2>
+      <p>
+        Om te voorkomen dat het formulier wordt volgespamd, houdt de server kort bij hoeveel
+        berichten er per bezoeker binnenkomen. Daarvoor gebruiken we je IP-adres en een
+        onomkeerbare vingerafdruk van je e-mailadres en bericht, waarmee we een dubbele verzending
+        herkennen zonder de inhoud te bewaren. Die gegevens staan alleen in het werkgeheugen van de
+        server, verdwijnen binnen een uur vanzelf en komen niet in een database of een profiel
+        terecht. De grondslag is ons gerechtvaardigd belang om de mailbox bruikbaar te houden.
+      </p>
+
+      <h2>Hosting</h2>
+      <p>
+        Deze site draait bij Vercel, dat daarbij als verwerker optreedt. Zoals elke webserver legt
+        Vercel technische gegevens over opgevraagde pagina&apos;s vast, waaronder je IP-adres, om de
+        site te kunnen leveren en storingen te kunnen onderzoeken.
+      </p>
+
       <h2>Hoe lang we gegevens bewaren</h2>
       <p>
         We bewaren persoonsgegevens niet langer dan nodig is voor het doel waarvoor ze zijn

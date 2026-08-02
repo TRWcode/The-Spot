@@ -46,17 +46,22 @@ const kept = await page.evaluate(() => ({
 }));
 console.log("4) ingevulde tekst bewaard:", kept.name === "Thomas Test" && kept.message.length > 0 ? "JA" : "NEE", JSON.stringify(kept));
 
-// 5. Valid submit — no API key configured, so this must fail loudly, not silently succeed.
+// 5. Geldige inzending. LET OP: staan RESEND_API_KEY en CONTACT_FROM in de
+//    omgeving van de server waar dit tegenaan draait, dan komt dit bericht
+//    écht in de inbox van CONTACT_TO. Zonder die twee hoort het luid te falen
+//    in plaats van stil te doen alsof.
 await page.evaluate(() => {
   const e = document.querySelector("#email");
   e.value = "";
 });
 await page.type("#email", "thomas@voorbeeld.nl");
-console.log("5) geldig, zonder API-key ->", JSON.stringify(await submit()));
+console.log("5) geldige inzending ->", JSON.stringify(await submit()));
 
 // 6. Honeypot filled = treated as a bot, answered with success, nothing sent.
+//    Het veld heet `onderwerp`, niet `company`: autofill vulde die laatste in
+//    bij echte bezoekers. Zie de commit die de honeypot hernoemde.
 await page.evaluate(() => {
-  document.querySelector("#company").value = "bot";
+  document.querySelector("#onderwerp").value = "bot";
 });
 console.log("6) honeypot ingevuld ->", JSON.stringify(await submit()));
 

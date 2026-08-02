@@ -23,7 +23,7 @@ export function Contact() {
 
           <MaskLines
             className="mt-6 max-w-[14ch] font-display text-h2 leading-[1.02] font-semibold -tracking-[0.03em]"
-            lines={["Laten we jouw", "visie tot leven", "brengen."]}
+            lines={["Laten we het", "erover hebben."]}
             delay={0.1}
           />
 

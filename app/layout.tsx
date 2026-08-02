@@ -19,8 +19,16 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description:
-    "The SPOT maakt video en social media content die aandacht pakt en blijft plakken. Van particulier tot merk, uit Haarlem.",
-  keywords: ["videoproductie", "social media content", "Haarlem", "aftermovie", "bedrijfsvideo", "reels"],
+    "The SPOT maakt video en social media content die aandacht pakt en blijft plakken. Van particulier tot merk, uit Wormerveer.",
+  keywords: [
+    "videoproductie",
+    "social media content",
+    "Wormerveer",
+    "Zaanstreek",
+    "aftermovie",
+    "bedrijfsvideo",
+    "reels",
+  ],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",

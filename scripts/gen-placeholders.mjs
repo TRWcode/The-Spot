@@ -31,11 +31,10 @@ if (PATHS.length !== 3) {
   throw new Error(`Expected 3 paths in ${MARK_SVG}, found ${PATHS.length}. Re-run scripts/trace-mark.mjs.`);
 }
 
-/** name, width, height, hue seed. 4:3 — the ratio the service cards use. */
+/** name, width, height, hue seed. 16:9 — the ratio the service cards use. */
 const TARGETS = [
-  ["service-video", 1200, 900, 1],
-  ["service-foto", 1200, 900, 2],
-  ["service-social", 1200, 900, 3],
+  ["service-video", 1600, 900, 1],
+  ["service-social", 1600, 900, 3],
 ];
 
 const GLOWS = ["#1AEBD8", "#15C6D8", "#0A78EC", "#056DE9"];

@@ -9,27 +9,17 @@
 export const site = {
   name: "The SPOT",
   tagline: "Videoproductie | Social media content",
-  city: "Haarlem",
+  city: "Wormerveer",
   email: "beer@dikkeboomspotproducties.nl",
   phone: "+31 6 22 82 99 16",
   phoneHref: "+31622829916",
-  address: "Tappersweg 14-011, 2031 EV Haarlem",
+  address: "Witte Vlinderweg 12C, 1521 PS Wormerveer",
   /**
-   * The registered company behind the brand.
-   *
-   * "The SPOT" is what the site says everywhere; the entity that signs
-   * contracts and is on file at the Kamer van Koophandel is still SPOT post &
-   * video Producties. The legal pages name both, once, and then use the brand
-   * — terms that name a company nobody recognises are as unhelpful as terms
-   * that name one that does not legally exist.
-   *
-   * TODO (Beer): laat "The SPOT" als handelsnaam bijschrijven bij de KvK als
-   * dat nog niet is gebeurd.
+   * One name everywhere: SPOT post & video Producties is per 02-08-2026 geen
+   * handelsnaam meer, dus de juridische pagina's noemen alleen The SPOT en is
+   * er niets meer om naast `name` te zetten. Het KvK-nummer verandert niet mee.
    */
-  entity: {
-    name: "SPOT post & video Producties",
-    kvk: "96981547",
-  },
+  kvk: "96981547",
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/beer-dikkeboom-b768a0264/" },
     { label: "Instagram", href: "https://www.instagram.com/spotvideoproducties/" },
@@ -93,19 +83,13 @@ export const trust = {
 
 export const services = {
   eyebrow: "Wat we bieden",
-  title: "Drie manieren waarop we je merk laten bewegen.",
+  title: "Twee manieren waarop we je merk laten bewegen.",
   items: [
     {
       title: "Videoproductie op maat",
       body: "Van concept tot eindmontage. Bedrijfsfilms, commercials en aftermovies die precies vertellen wat jij bedoelt.",
       icon: "film",
       poster: "/media/posters/service-video.jpg", // TODO: echte still; tot dan toont de kaart het geanimeerde mark
-    },
-    {
-      title: "Professionele fotografie",
-      body: "Scherpe merkbeelden, portretten en productfotografie, klaar voor web, print en socials.",
-      icon: "camera",
-      poster: "/media/posters/service-foto.jpg", // TODO
     },
     {
       title: "Social media content",
@@ -286,7 +270,7 @@ export const contactPage = {
     },
   ],
   /** Sits under the details block; the studio is a real place you can visit. */
-  studioNote: "Studio in Haarlem. Draaien doen we door heel Nederland.",
+  studioNote: "Een complete studio in Wormerveer, uitgerust voor iedere productie.",
 } as const;
 
 /**
@@ -300,34 +284,38 @@ export const contactPage = {
 export const about = {
   eyebrow: "Over ons",
   title: "Gemaakt om impact te maken.",
-  lead: "Wij maken video en fotografie op maat: beeld dat je merk versterkt, je verhaal vertelt en blijft hangen. Geen standaard formats, geen bestelling afleveren.",
+  lead: "Wij maken video en social media content op maat: beeld dat je merk versterkt, je verhaal vertelt en blijft hangen. Geen standaard formats, geen bestelling afleveren.",
   /**
    * Portrait. Generated from assets-inbox/photos/ by scripts/make-photos.mjs;
    * app/over-ons/page.tsx checks the file exists at build time and falls back
    * to a branded panel, so a missing photo is never a broken image.
+   *
+   * `quote` staat onder de naam in het bijschrift: Beers eigen motto, niet
+   * onze samenvatting van hem.
    */
   portrait: {
     src: "/media/about/beer.jpg",
     alt: "Beer Dikkeboom, oprichter van The SPOT",
     name: "Beer Dikkeboom",
     role: "Oprichter en eigenaar",
+    quote: "Fouten maken is menselijk. Reflecteren is groeien. De volgende keer doe ik het beter.",
   },
   /**
-   * Beer's own words, from the about page of spotvideoproducties.nl — first
-   * person on purpose. The rest of the site speaks as "wij", and it should:
-   * a client hires a studio. But the one place where a founder's face is on
-   * the page is the one place where "ik" is the honest pronoun, and a story
-   * that starts at fifteen is worth more than another paragraph of we-make-
-   * beautiful-images.
+   * Beer's own words, aangeleverd 02-08-2026 — first person on purpose. The
+   * rest of the site speaks as "wij", and it should: a client hires a studio.
+   * But the one place where a founder's face is on the page is the one place
+   * where "ik" is the honest pronoun, and a story that starts at fifteen is
+   * worth more than another paragraph of we-make-beautiful-images.
    *
-   * Only the company name is changed, to the brand this site carries.
+   * Overgenomen zoals aangeleverd. SPOT post & video Producties wordt hier
+   * genoemd als geschiedenis, niet als handelsnaam — vandaar de verleden tijd.
    */
   story: {
-    title: "Creatie, groei en ondernemerschap",
+    title: "Wie is Beer Dikkeboom?",
     body: [
-      "Mijn naam is Beer Dikkeboom, oprichter en eigenaar van The SPOT. In januari 2023 ben ik op 15-jarige leeftijd gestart met mijn eerste onderneming. Vanaf het begin heb ik één ding altijd in mijn achterhoofd gehouden: knie afvegen en doorgaan. Die mentaliteit vormt de basis voor waar The SPOT vandaag staat.",
-      "Ondernemen zit in mijn bloed. Ik ben continu bezig met het bouwen, verbeteren en laten groeien van ideeën. Wat begon als een idee is uitgegroeid tot een bedrijf met een breed scala aan klanten, verspreid door heel Nederland en ook daarbuiten.",
-      "Ik werk dagelijks aan producties waarin beeld, verhaal en kwaliteit samenkomen. Naast The SPOT ben ik betrokken bij meerdere bedrijven en ben ik aandeelhouder in verschillende startups, waarbij groei en ontwikkeling centraal staan.",
+      "Mijn naam is Beer Dikkeboom, oprichter van The SPOT. Op mijn 15e begon ik als freelancer onder de naam SPOT post & video Producties. Wat startte met het maken van video's voor ondernemers en merken, groeide al snel uit tot een volledig videoproductiebedrijf. Later breidden we onze dienstverlening uit met social media management, zodat we klanten niet alleen konden helpen met sterke content, maar ook met de strategie en zichtbaarheid daaromheen.",
+      "Die groei leidde tot een nieuwe stap. Vandaag de dag gaan we verder als The SPOT: een naam die beter past bij onze ambitie en toekomstvisie. We bouwen niet alleen aan een succesvol bedrijf, maar aan een sterk merk dat staat voor kwaliteit, creativiteit en innovatie.",
+      "Ondernemen draait voor mij om blijven ontwikkelen. Nieuwe ideeën bedenken, kansen zien en telkens een stap verder zetten. Die mentaliteit heeft The SPOT gebracht waar het nu staat en vormt de basis voor alles wat we in de toekomst willen realiseren.",
     ],
   },
   /** Condensed from the wel/niet section, so the two never contradict. */
@@ -358,7 +346,12 @@ export const about = {
 
 export const contact = {
   eyebrow: "Sparren met of zonder koffie?",
-  title: "Laten we jouw visie tot leven brengen.",
+  /**
+   * Stond hier als "Laten we jouw visie tot leven brengen" — een zin die op
+   * duizend bureausites staat en nergens iets belooft. Deze sluit aan op de
+   * eyebrow erboven en klinkt als een mens.
+   */
+  title: "Laten we het erover hebben.",
   cta: "Start jouw project",
   lead: "Vertel kort wat je voor ogen hebt. Je krijgt binnen één werkdag antwoord. Geen offertemolen, gewoon een gesprek.",
   form: {

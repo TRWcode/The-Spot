@@ -12,17 +12,16 @@ export const metadata: Metadata = {
  * The client's own disclaimer, vastgesteld 5 maart 2025.
  *
  * Supplied alongside the terms and the privacy statement; only the company
- * name and the contact details are brought in line with the rest of this site
- * — the address and KvK number are the same, the e-mail is not. See the note
- * in lib/content.
+ * name and the contact details are brought in line with the rest of this site.
+ * Per 02-08-2026 staat er één naam: The SPOT. Zie de notitie in lib/content.
  */
 export default function Disclaimer() {
   return (
     <LegalPage eyebrow="Juridisch" title="Disclaimer" updated="2025-03-05">
       <h2>1. Algemeen</h2>
       <p>
-        Deze website wordt beheerd door {site.name}, handelsnaam van {site.entity.name}, gevestigd
-        aan {site.address}. Door deze website te gebruiken, stemt u in met deze disclaimer.
+        Deze website wordt beheerd door {site.name}, gevestigd aan {site.address}. Door deze website
+        te gebruiken, stemt u in met deze disclaimer.
       </p>
 
       <h2>2. Intellectuele eigendomsrechten</h2>
@@ -60,7 +59,7 @@ export default function Disclaimer() {
       <p>
         Voor vragen over deze disclaimer kunt u contact met ons opnemen:
         <br />
-        {site.entity.name}
+        {site.name}
         <br />
         E-mail: <a href={`mailto:${site.email}`}>{site.email}</a>
         <br />
@@ -68,7 +67,7 @@ export default function Disclaimer() {
         <br />
         Telefoon: <a href={`tel:${site.phoneHref}`}>{site.phone}</a>
         <br />
-        KvK-nummer: {site.entity.kvk}
+        KvK-nummer: {site.kvk}
       </p>
     </LegalPage>
   );

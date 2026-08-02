@@ -14,8 +14,7 @@ export const metadata: Metadata = {
  * This replaced a scaffold written here with placeholder numbers and a visible
  * "nog niet juridisch getoetst" banner. Nothing substantive is changed: the
  * articles, the periods and the amounts are exactly as supplied. The only edit
- * is the company name, which now names the brand and the registered entity
- * together — see `site.entity`.
+ * is the company name, which is The SPOT throughout — see `site` in lib/content.
  *
  * Terms only bind if they are supplied before the agreement is signed, so link
  * to this page from offertes rather than relying on it being findable.
@@ -24,16 +23,15 @@ export default function Voorwaarden() {
   return (
     <LegalPage eyebrow="Juridisch" title="Algemene voorwaarden" updated="2025-03-05">
       <p>
-        {site.name} is een handelsnaam van {site.entity.name}, gevestigd aan {site.address} en
-        ingeschreven bij de Kamer van Koophandel onder nummer {site.entity.kvk}.
+        {site.name} is gevestigd aan {site.address} en ingeschreven bij de Kamer van Koophandel
+        onder nummer {site.kvk}.
       </p>
 
       <h2>Artikel 1. Definities</h2>
       <dl>
         <dt>Videoproductiebedrijf</dt>
         <dd>
-          {site.entity.name}, handelend onder de naam {site.name}, gevestigd aan {site.address},
-          geregistreerd onder KvK-nummer {site.entity.kvk}.
+          {site.name}, gevestigd aan {site.address}, geregistreerd onder KvK-nummer {site.kvk}.
         </dd>
         <dt>Klant</dt>
         <dd>

@@ -545,10 +545,6 @@
     animation: svc-pulse 1.6s var(--ease-brand) infinite;
     transform-origin: 52% 50%;
   }
-  .svc-icon [data-anim="iris"] {
-    animation: svc-iris 2.2s var(--ease-brand) infinite;
-    transform-origin: 50% 53%;
-  }
   .svc-icon [data-anim="feed"] {
     animation: svc-feed 2s linear infinite;
   }
@@ -1671,15 +1667,6 @@
   }
   40% {
     transform: scale(1.14);
-  }
-}
-@keyframes svc-iris {
-  0%,
-  100% {
-    transform: rotate(0deg) scale(1);
-  }
-  45% {
-    transform: rotate(30deg) scale(0.66);
   }
 }
 @keyframes svc-feed {
