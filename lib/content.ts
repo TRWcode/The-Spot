@@ -118,10 +118,12 @@ export const services = {
 /**
  * Real cases, with real YouTube IDs and posters pulled from those videos.
  *
- * `situation` / `approach` / `result` carry Beer's own words for CLOK. The
- * other three are STUBS — deliberately generic framing, because inventing
- * specifics about someone's client work would put words in their mouth.
- * TODO: replace the marked copy per case.
+ * `situation` en `approach` komen van spotvideoproducties.nl, Beers eigen
+ * cases, ingekort naar de toon van deze site. Twee uitzonderingen staan als
+ * TODO bij de case zelf: de aanpak van Kinderfysio (de bron was een
+ * kopieerfout) en alle vier de `result`-regels, want de oude site liet dat
+ * blok leeg — daar staat alleen de video onder "Resultaat". Die vier zinnen
+ * zijn dus van ons en moeten langs Beer voordat ze als zijn cijfers gelden.
  */
 export const work = {
   eyebrow: "Selected work",
@@ -145,14 +147,20 @@ export const work = {
       clip: "/media/clips/kinderfysio-haarlem.mp4",
       span: "md:col-span-7",
       ratio: "16 / 9",
-      intro: "Een bedrijfsvideo die laat zien hoe de praktijk werkt en voor wie.",
-      // TODO: vervang door de echte case-tekst
+      intro: "Een bedrijfsvideo die laat zien wie er achter de praktijk staat.",
       situation:
-        "De praktijk wilde ouders vooraf laten zien hoe een behandeling eruitziet, zodat kinderen met een vertrouwd gevoel binnenkomen.",
+        "De praktijk wilde het specialisme binnen de kinderfysiotherapie voelbaar maken. Niet alleen uitleggen wat ze doen, maar laten zien wie ze zijn en welke rol ze spelen voor kinderen en ouders. De locatie, het team en de manier van behandelen moesten samen één vertrouwd beeld vormen.",
+      /**
+       * TODO: laat Beer deze aanpak bevestigen. Op de oude site stond hier
+       * woord voor woord dezelfde alinea als bij Khione ("waar gebruikers
+       * vastlopen in het proces"), wat bij een instructievideo klopt en bij
+       * een bedrijfsvideo over een praktijk nergens op slaat. Overgenomen zou
+       * het een kopieerfout zijn die we zelf publiceren, dus dit is geschreven
+       * vanuit de vraag hierboven en beweert niets over de opnamedag.
+       */
       approach:
-        "We hebben een dag meegelopen en de sfeer op de praktijk vastgelegd zoals die is: rustig, speels en zonder geregisseerde momenten.",
-      result:
-        "Een video die de drempel verlaagt en op de site en socials het eerste beeld vormt dat ouders van de praktijk krijgen.",
+        "De praktijk zelf is het verhaal: de ruimtes, het team en hoe een behandeling verloopt. Door die drie in één lijn te brengen ziet een ouder waar het kind terechtkomt, nog voordat de eerste afspraak er is.",
+      result: "Ouders zien wie er achter de praktijk staat, nog voordat ze binnenstappen.",
     },
     {
       slug: "khione-cold-therapy",
@@ -165,17 +173,18 @@ export const work = {
       clip: "/media/clips/khione-cold-therapy.mp4",
       span: "md:col-span-5",
       ratio: "5 / 4",
-      intro: "Productbeeld dat de ervaring van koudetherapie invoelbaar maakt.",
-      // TODO: vervang door de echte case-tekst
+      intro: "Een handleiding vertaald naar beeld, zodat klanten zelf opbouwen.",
       situation:
-        "Khione wilde het product laten zien zonder het als een klinisch apparaat neer te zetten.",
+        "Khione wilde de bestaande handleiding vertalen naar een duidelijke, visuele video, zodat klanten het product zelf kunnen opbouwen. De meeste vragen gingen over het in elkaar zetten, en dat legde druk op de klantenservice. De video moest de klant helpen en intern tijd besparen.",
       approach:
-        "Strakke productbeelden afgewisseld met het moment zelf, zodat je de kou bijna voelt in plaats van er alleen naar kijkt.",
-      result: "Beeld dat op de webshop en in campagnes hetzelfde verhaal vertelt.",
+        "We zijn begonnen bij de plekken waar mensen tijdens de opbouw vastlopen. Daaromheen ligt een verhaallijn waarin elke stap logisch op de vorige volgt. Met gerichte shots en nauwkeurige camera-instellingen is elk detail zichtbaar, en de studio-omgeving houdt het rustig en overzichtelijk.",
+      result: "Klanten bouwen op met de video ernaast, niet met de klantenservice aan de lijn.",
     },
     {
       slug: "de-groot-recreatie",
-      kind: "Merkvideo",
+      // Beers eigen label op de oude site. "Merkvideo" stond hier eerst en was
+      // onjuist: dit informeert deelnemers vooraf, het verkoopt geen merk.
+      kind: "Experience video",
       project: "De Groot Recreatie",
       client: "De Groot Recreatie",
       year: "2025",
@@ -184,11 +193,12 @@ export const work = {
       clip: "/media/clips/de-groot-recreatie.mp4",
       span: "md:col-span-5",
       ratio: "5 / 4",
-      intro: "De ervaring van een dag bij De Groot, in beeld gebracht.",
-      // TODO: vervang door de echte case-tekst
-      situation: "De Groot wilde de beleving van hun locatie overbrengen aan wie er nog nooit was.",
-      approach: "We hebben een dag gefilmd op de momenten waarop het er het drukst en het mooist is.",
-      result: "Een merkvideo die de sfeer verkoopt in plaats van de faciliteiten op te sommen.",
+      intro: "Deelnemers voorbereiden op de wadlooptocht, zonder hem te verklappen.",
+      situation:
+        "De vraag ontstond uit eigen ervaring. Tijdens een wadlooptocht met familie viel op hoe verschillend mensen aan de start stonden: de één goed uitgerust, de ander zonder idee wat hem te wachten stond. Er was geen video die deelnemers vooraf op weg hielp. Wat houdt zo'n tocht in, hoe bereid je je voor en vanaf welke leeftijd kun je mee?",
+      approach:
+        "Eerst bepaald wie er kijkt en waar. Daarna gefilterd welke informatie je vooraf echt nodig hebt, zonder de beleving van de tocht weg te geven. De verhaallijn houdt het midden tussen informeren en enthousiasmeren, zodat je voorbereid én nieuwsgierig aan de start staat.",
+      result: "Deelnemers komen voorbereid aan de start, zonder dat de tocht verklapt is.",
     },
     {
       slug: "clok",
@@ -206,8 +216,9 @@ export const work = {
         "De klant wilde een krachtige aftermovie van de Dag van Economische Zaken in Apeldoorn. Een event op een unieke locatie die zich perfect leent voor zowel reguliere camerabeelden als drone-opnames. Het doel was om de sfeer, energie en schaal van de dag vast te leggen in één sterke video.",
       approach:
         "We hebben gefocust op het vastleggen van de volledige beleving van de dag, inclusief de verschillende deelsessies en momenten verspreid over het terrein. Door de omvang van de locatie en het aantal ruimtes was een strakke planning en goede afstemming binnen het team essentieel. Met een combinatie van camera- en dronebeelden hebben we gezorgd voor variatie, overzicht en dynamiek in de uiteindelijke productie.",
-      result:
-        "Eén video die de schaal en de energie van de dag terugbrengt, en die CLOK breed heeft ingezet richting leden en partners.",
+      // De inzet richting leden en partners stond hier eerst bij, maar dat is
+      // niet iets wat Beer heeft aangeleverd of wat wij kunnen nagaan.
+      result: "Eén video die de schaal en de energie van de dag terugbrengt.",
     },
   ],
 } as const;

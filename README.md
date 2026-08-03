@@ -76,9 +76,15 @@ Blokkerend voor livegang:
       adres op het oude merkdomein, terwijl de site op thespotproducties.nl
       staat en de mails die het formulier stuurt dat domein in het onderwerp
       noemen. Bevestigen of hier een adres op het nieuwe domein hoort.
-- [ ] **Case-teksten.** Alleen CLOK bevat Beers eigen woorden. De `situation` /
-      `approach` / `result` van de andere drie zijn bewust generiek gehouden en
-      staan als `TODO` gemarkeerd.
+- [ ] **Case-teksten.** `situation` en `approach` komen nu van Beers eigen
+      cases op spotvideoproducties.nl, ingekort naar de toon van deze site.
+      Twee dingen blijven open. De aanpak van Kinderfysio stond op de oude site
+      woord voor woord gelijk aan die van Khione — een kopieerfout die bij een
+      instructievideo klopt en bij een bedrijfsvideo niet, dus die is opnieuw
+      geschreven vanuit de vraag en moet langs Beer. En de vier `result`-regels
+      zijn van ons: de oude site liet dat blok leeg, er staat alleen een video
+      onder "Resultaat". Ze beweren niets meetbaars, maar het is wel Beers naam
+      eronder.
 - [ ] **Review op de homepage.** De quote van Pleunie Groen prijst "vette
       foto's". Fotografie is per 02-08-2026 geen dienst meer; vervang de review
       of accepteer de verwijzing bewust.
