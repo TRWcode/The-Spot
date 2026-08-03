@@ -22,6 +22,7 @@ export function Services() {
         <Reveal>
           <p className="eyebrow">{services.eyebrow}</p>
           <h2 className="mt-5 max-w-[18ch] text-h2">{services.title}</h2>
+          <p className="lead mt-6 max-w-[46ch] text-ink-2">{services.lead}</p>
         </Reveal>
 
         <Reveal stagger className="mt-16 grid gap-6 md:grid-cols-2" y={28}>

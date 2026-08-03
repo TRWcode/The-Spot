@@ -12,8 +12,8 @@ export const metadata: Metadata = {
  * Written against what this site actually does, not from a generic template:
  * one contact form (Resend), rate limiting op IP in `lib/rate-limit.ts`,
  * hosting bij Vercel, YouTube embeds in nocookie mode achter een facade,
- * self-hosted fonts, no analytics and no tracking cookies. If any of that
- * changes, this page has to change with it.
+ * self-hosted fonts, Vercel Web Analytics (cookieloos) en verder geen tracking.
+ * If any of that changes, this page has to change with it.
  *
  * Deliberately kept over the generic statement supplied with the terms and the
  * disclaimer. That one announces the processing of "IP-adres, browserinformatie
@@ -67,6 +67,18 @@ export default function Privacy() {
         site te kunnen leveren en storingen te kunnen onderzoeken.
       </p>
 
+      <h2>Bezoekstatistieken</h2>
+      <p>
+        Om te zien welke pagina&apos;s worden gelezen, gebruiken we Vercel Web Analytics. Daar komt
+        geen cookie aan te pas en je IP-adres wordt niet opgeslagen: uit de gegevens van je bezoek
+        wordt eenmalig een onomkeerbare code berekend, waarmee meerdere pagina&apos;s binnen
+        dezelfde dag als één bezoek worden geteld. Die code vervalt daarna en is niet naar jou terug
+        te rekenen. We zien dus alleen aantallen, plus welke pagina, welk land, welk soort apparaat
+        en via welke site je binnenkwam. Er wordt geen profiel opgebouwd en je wordt niet gevolgd
+        naar andere websites. De grondslag is ons gerechtvaardigd belang om te weten wat er op deze
+        site werkt.
+      </p>
+
       <h2>Hoe lang we gegevens bewaren</h2>
       <p>
         We bewaren persoonsgegevens niet langer dan nodig is voor het doel waarvoor ze zijn
@@ -77,8 +89,10 @@ export default function Privacy() {
 
       <h2>Cookies</h2>
       <p>
-        Deze site plaatst zelf geen cookies en gebruikt geen analytics- of advertentiescripts. De
-        lettertypen staan op onze eigen server, dus daarvoor gaat er niets naar een derde partij.
+        Deze site plaatst zelf geen cookies. Ook onze bezoekstatistieken werken zonder cookies, en
+        advertentiescripts staan er helemaal niet op. Daarom hoeven we je geen cookiemelding voor te
+        leggen. De lettertypen staan op onze eigen server, dus daarvoor gaat er niets naar een derde
+        partij.
       </p>
 
       <h2>Video&apos;s van YouTube</h2>

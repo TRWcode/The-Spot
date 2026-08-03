@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { generalSans, switzer } from "@/app/fonts";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { RouteScroll } from "@/components/motion/RouteScroll";
@@ -72,6 +73,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main id="main">{children}</main>
           <Footer />
         </MotionProvider>
+
+        {/* Vercel Web Analytics: cookieloos, geen persoonlijke identifiers, dus
+            geen cookiebanner nodig. Staat wel in de privacyverklaring. */}
+        <Analytics />
       </body>
     </html>
   );

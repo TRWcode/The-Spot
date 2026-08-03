@@ -81,9 +81,15 @@ export const trust = {
   ],
 } as const;
 
+/**
+ * The title deliberately does not count the cards. "Twee manieren" read as a
+ * menu with exactly two items on it, while the work is regelmatig een mix of
+ * iets wat hieronder niet staat — vandaar de `lead` die het open zet.
+ */
 export const services = {
   eyebrow: "Wat we bieden",
-  title: "Twee manieren waarop we je merk laten bewegen.",
+  title: "Zo brengen we je merk in beweging.",
+  lead: "Dit zijn de twee waar we meestal beginnen. Zit jouw vraag er niet tussen, dan bouwen we het op maat om je verhaal heen.",
   items: [
     {
       title: "Videoproductie op maat",
