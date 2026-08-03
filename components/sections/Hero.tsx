@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap";
 import { SMark } from "@/components/brand/SMark";
 import { HeroReel } from "@/components/ui/HeroReel";
 import { useMotion } from "@/components/motion/MotionProvider";
+import { useHashScroll } from "@/components/motion/useHashScroll";
 import { hero } from "@/lib/content";
 import { EASE, EASE_STRONG, LOAD } from "@/lib/motion";
 
@@ -31,6 +32,7 @@ export function Hero() {
   const fly = useRef<HTMLDivElement>(null);
   const tilt = useRef<HTMLDivElement>(null);
   const { reduced } = useMotion();
+  const hashScroll = useHashScroll();
 
   useIsomorphicLayoutEffect(() => {
     if (reduced) return;
@@ -213,7 +215,10 @@ export function Hero() {
           className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4"
           style={{ animationDelay: "1.08s" }}
         >
-          <a href={hero.primaryCta.href} className="btn-grad">
+          {/* onClick, geen kale anchor: `.lenis-smooth` zet scroll-behavior op
+              auto, dus zonder dit landt de knop in één frame terwijl dezelfde
+              link in de header rustig doorloopt. */}
+          <a href={hero.primaryCta.href} onClick={hashScroll} className="btn-grad">
             <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20">
               <svg viewBox="0 0 100 100" className="h-3 w-3" aria-hidden>
                 <path d="M32 24 L76 50 L32 76 Z" fill="currentColor" />
@@ -222,7 +227,7 @@ export function Hero() {
             {hero.primaryCta.label}
           </a>
 
-          <a href={hero.secondaryCta.href} className="btn-text !text-white">
+          <a href={hero.secondaryCta.href} onClick={hashScroll} className="btn-text !text-white">
             {hero.secondaryCta.label}
             <span className="arrow" aria-hidden>
               ↓

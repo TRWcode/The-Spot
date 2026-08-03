@@ -9,6 +9,7 @@ import { nav, site } from "@/lib/content";
 import { navHref } from "@/lib/nav";
 import { socialProfiles } from "@/lib/socials";
 import { useMotion } from "@/components/motion/MotionProvider";
+import { useHashScroll } from "@/components/motion/useHashScroll";
 
 /**
  * Transparent over the hero, then backdrop-blur + hairline once scrolled.
@@ -29,6 +30,7 @@ export function Header() {
   const panelRef = useRef<HTMLDivElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const { lenisRef } = useMotion();
+  const hashScroll = useHashScroll();
   const panelId = useId();
   const pathname = usePathname();
 
@@ -185,25 +187,14 @@ export function Header() {
 
   // Not curried: a factory called from JSX reads as a render-time ref access.
   const jump = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const href = e.currentTarget.getAttribute("href");
     // Closing first hands scrolling back to Lenis before it is asked to move;
     // scrolling a stopped instance silently does nothing. It runs for the
     // cross-page links too, so the sheet is never left open behind a route
     // change.
     setMenuOpen(false);
-    if (!href?.startsWith("#")) return;
-    const el = document.querySelector(href);
-    if (!el) return;
-    e.preventDefault();
-    requestAnimationFrame(() => {
-      const lenis = lenisRef.current;
-      // No offset argument: `section[id] { scroll-margin-top }` in globals.css
-      // is the single source of truth for clearing the fixed header, and both
-      // Lenis and the native path honour it. Passing -80 here as well landed
-      // this one route 160px high while every other way in landed at 80.
-      if (lenis) lenis.scrollTo(el as HTMLElement);
-      else el.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    // De reis zelf staat in useHashScroll, omdat de hero en de footer naar
+    // dezelfde secties wijzen en anders anders zouden bewegen.
+    hashScroll(e);
   };
 
   const headerOnDark = onDark && !menuOpen;

@@ -5,6 +5,7 @@ import { legal, nav, site } from "@/lib/content";
 import { navHref } from "@/lib/nav";
 import { socialProfiles } from "@/lib/socials";
 import { ScrollTop } from "@/components/site/ScrollTop";
+import { HashLink } from "@/components/site/HashLink";
 
 export function Footer() {
   return (
@@ -31,12 +32,12 @@ export function Footer() {
                   same-page case a scroll rather than a reload. */}
               {nav.map((item) => (
                 <li key={item.href}>
-                  <Link
+                  <HashLink
                     href={navHref(item.href, false)}
                     className="flex min-h-[44px] items-center text-[15px] hover:text-blue"
                   >
                     {item.label}
-                  </Link>
+                  </HashLink>
                 </li>
               ))}
             </ul>

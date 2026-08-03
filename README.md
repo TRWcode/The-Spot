@@ -184,6 +184,7 @@ node scripts/make-og.mjs                  # social share-image (1200x630)
 node scripts/check-responsive.mjs <url>   # overflow + tapdoelen, 11 breedtes
 node scripts/check-jank.mjs <url>         # fps tijdens scrollen, per verdachte
 node scripts/check-a11y-motion.mjs <url>  # controleert reduced-motion
+node scripts/check-anchor-scroll.mjs <url> # #sectie-links scrollen, niet springen
 node scripts/check-hero-contrast.mjs <url># contrast onder de hero-tekst
 node scripts/shots.mjs <url> <outDir>     # screenshots, 4 viewports
 node scripts/lcp.mjs <url>                # welk element is LCP
