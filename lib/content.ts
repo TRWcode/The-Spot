@@ -284,7 +284,7 @@ export const reviewPage = {
    * klanten om een review vragen heet review gating en is bij Google verboden;
    * de vraag hoort open te staan, en zo gesteld levert hij ook eerlijker werk.
    */
-  lead: "Een paar zinnen helpen ons echt verder. Goed of slecht — liever eerlijk dan aardig.",
+  lead: "Een paar zinnen helpen ons echt verder. Goed of slecht, liever eerlijk dan aardig.",
   cta: "Schrijf je review op Google",
   /**
    * Het Place ID staat in geen adres dat je kunt kopiëren, maar het is af te
