@@ -46,12 +46,19 @@ const MOVED: Record<string, string> = {
 };
 
 /**
- * Het Place ID van de Google-vermelding, te vinden met de Place ID Finder.
+ * Waar /review op uitkomt.
  *
- * Leeg laten kan: dan bestaat /review gewoon niet, en dat is beter dan een
- * kort adres dat mensen naar een kapot Google-scherm stuurt.
+ * Het nummer is het CID van de Google-vermelding, het interne kenmerk dat
+ * Google zelf in zijn zoekresultaten meegeeft. Deze vorm opent de kaart met
+ * de knop "Schrijf een review" erop.
+ *
+ * Rechtstreeks het sterrenvenster openen kan ook, met
+ * search.google.com/local/writereview?placeid=..., maar daar is het Place ID
+ * voor nodig en dat staat nergens in een adres dat je kunt kopiëren. Zodra de
+ * vermelding geclaimd is geeft Google er een eigen korte deel-link bij; die
+ * scheelt de bezoeker een klik en mag hier dan overheen.
  */
-const REVIEW_PLACE_ID = "";
+const REVIEW_URL = "https://www.google.com/maps?cid=14869887552257795100";
 
 const nextConfig: NextConfig = {
   async redirects() {
@@ -63,24 +70,18 @@ const nextConfig: NextConfig = {
      * Reviews komen van mensen die net een oplevering achter de rug hebben,
      * niet van bezoekers van de site — die hebben nog nergens iets over te
      * schrijven. Daarom geen knop op een pagina maar een kort adres dat onder
-     * een mail of in een appje past, en dat rechtstreeks het sterrenvenster
-     * van Google opent in plaats van de kaart waar je het zelf nog moet zoeken.
+     * een mail of in een appje past.
      *
-     * Tijdelijk, want zodra de vermelding geclaimd is geeft Google er een eigen
-     * korte deel-link bij en verhuist de bestemming daarheen. Een permanente
-     * redirect blijft in de browser van iedereen die hem één keer volgde
-     * hangen, en dan wijst /review bij je vaste klanten voor altijd naar het
-     * oude adres.
+     * Tijdelijk, want de bestemming verhuist zodra de vermelding geclaimd is.
+     * Een permanente redirect blijft hangen in de browser van iedereen die hem
+     * één keer volgde, en dan wijst /review bij de vaste klanten voor altijd
+     * naar het oude adres.
      */
-    const review = REVIEW_PLACE_ID
-      ? [
-          {
-            source: "/review",
-            destination: `https://search.google.com/local/writereview?placeid=${REVIEW_PLACE_ID}`,
-            permanent: false,
-          },
-        ]
-      : [];
+    const review = {
+      source: "/review",
+      destination: REVIEW_URL,
+      permanent: false,
+    };
 
     const moved = Object.entries(MOVED).map(([from, to]) => ({
       source: from,
@@ -90,7 +91,7 @@ const nextConfig: NextConfig = {
     }));
 
     return [
-      ...review,
+      review,
       ...moved,
       {
         // Alles wat hierboven niet staat: oude blogposts, /wp-admin, /feed en
