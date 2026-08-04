@@ -46,19 +46,19 @@ const MOVED: Record<string, string> = {
 };
 
 /**
- * Waar /review op uitkomt.
+ * Waar /review op uitkomt: het sterrenvenster van Google, meteen open.
  *
- * Het nummer is het CID van de Google-vermelding, het interne kenmerk dat
- * Google zelf in zijn zoekresultaten meegeeft. Deze vorm opent de kaart met
- * de knop "Schrijf een review" erop.
+ * Het Place ID staat in geen enkel adres dat je kunt kopiëren, maar het is wel
+ * af te leiden uit het kenmerk dat Google in de kaart-URL meegeeft
+ * (`0x8dac95ccbca7417f:0xce5c73f1da54241c`). Die twee getallen zitten
+ * onveranderd in het ID: eerst het cel-nummer, dan het CID, allebei als acht
+ * bytes achterstevoren, verpakt en gecodeerd. Vandaar dat elk Place ID met
+ * `ChIJ` begint — dat is de verpakking, niet de plaats.
  *
- * Rechtstreeks het sterrenvenster openen kan ook, met
- * search.google.com/local/writereview?placeid=..., maar daar is het Place ID
- * voor nodig en dat staat nergens in een adres dat je kunt kopiëren. Zodra de
- * vermelding geclaimd is geeft Google er een eigen korte deel-link bij; die
- * scheelt de bezoeker een klik en mag hier dan overheen.
+ * Beide getallen zijn gecontroleerd tegen de zoekresultaten van Google zelf.
  */
-const REVIEW_URL = "https://www.google.com/maps?cid=14869887552257795100";
+const REVIEW_URL =
+  "https://search.google.com/local/writereview?placeid=ChIJf0GnvMyVrI0RHCRU2vFzXM4";
 
 const nextConfig: NextConfig = {
   async redirects() {
