@@ -45,43 +45,9 @@ const MOVED: Record<string, string> = {
   "/clok": "/werk/clok",
 };
 
-/**
- * Waar /review op uitkomt: het sterrenvenster van Google, meteen open.
- *
- * Het Place ID staat in geen enkel adres dat je kunt kopiëren, maar het is wel
- * af te leiden uit het kenmerk dat Google in de kaart-URL meegeeft
- * (`0x8dac95ccbca7417f:0xce5c73f1da54241c`). Die twee getallen zitten
- * onveranderd in het ID: eerst het cel-nummer, dan het CID, allebei als acht
- * bytes achterstevoren, verpakt en gecodeerd. Vandaar dat elk Place ID met
- * `ChIJ` begint — dat is de verpakking, niet de plaats.
- *
- * Beide getallen zijn gecontroleerd tegen de zoekresultaten van Google zelf.
- */
-const REVIEW_URL =
-  "https://search.google.com/local/writereview?placeid=ChIJf0GnvMyVrI0RHCRU2vFzXM4";
-
 const nextConfig: NextConfig = {
   async redirects() {
     const onOldHost = [{ type: "host" as const, value: OLD_HOST }];
-
-    /**
-     * Een adres dat je kunt opnoemen aan de telefoon.
-     *
-     * Reviews komen van mensen die net een oplevering achter de rug hebben,
-     * niet van bezoekers van de site — die hebben nog nergens iets over te
-     * schrijven. Daarom geen knop op een pagina maar een kort adres dat onder
-     * een mail of in een appje past.
-     *
-     * Tijdelijk, want de bestemming verhuist zodra de vermelding geclaimd is.
-     * Een permanente redirect blijft hangen in de browser van iedereen die hem
-     * één keer volgde, en dan wijst /review bij de vaste klanten voor altijd
-     * naar het oude adres.
-     */
-    const review = {
-      source: "/review",
-      destination: REVIEW_URL,
-      permanent: false,
-    };
 
     const moved = Object.entries(MOVED).map(([from, to]) => ({
       source: from,
@@ -91,7 +57,6 @@ const nextConfig: NextConfig = {
     }));
 
     return [
-      review,
       ...moved,
       {
         // Alles wat hierboven niet staat: oude blogposts, /wp-admin, /feed en

@@ -264,6 +264,41 @@ export const testimonial = {
 } as const;
 
 /**
+ * /review — het adres dat Beer na een oplevering doorgeeft.
+ *
+ * Staat bewust niet in de navigatie en niet in de sitemap. Bezoekers van de
+ * site hebben nog nergens iets over te schrijven; dit is voor de klant die net
+ * zijn film binnen heeft en aan wie het gevraagd wordt.
+ *
+ * Schrijven gebeurt op Google en nergens anders. Een eigen formulier zou
+ * reviews bij ons verzamelen in plaats van bij Google, en ze daarna zelf
+ * overtypen is precies waar Google profielen voor schorst. Wat deze pagina wel
+ * doet: het vragen prettig maken en de drempel wegnemen bij wie niet weet wat
+ * hij moet schrijven.
+ */
+export const reviewPage = {
+  eyebrow: "Review",
+  title: "Hoe was het om met ons te werken?",
+  lead: "Een paar zinnen zijn genoeg. Van iemand die het al met ons deed weegt het zwaarder dan alles wat wij over onszelf kunnen zeggen.",
+  cta: "Schrijf je review op Google",
+  /**
+   * Het Place ID staat in geen adres dat je kunt kopiëren, maar het is af te
+   * leiden uit het kenmerk in de kaart-URL van de vermelding
+   * (`0x8dac95ccbca7417f:0xce5c73f1da54241c`): die twee getallen zitten er
+   * onveranderd in. Vandaar dat elk Place ID met `ChIJ` begint — dat is de
+   * verpakking, niet de plaats.
+   */
+  href: "https://search.google.com/local/writereview?placeid=ChIJf0GnvMyVrI0RHCRU2vFzXM4",
+  note: "Je schrijft hem op Google, met je eigen account. Een halve minuut werk.",
+  /** Voor wie het scherm openklapt en niet weet waar te beginnen. */
+  prompts: [
+    "Waar hebben we je mee geholpen?",
+    "Hoe liep de samenwerking?",
+    "Wat zou je zeggen tegen iemand die nog twijfelt?",
+  ],
+} as const;
+
+/**
  * /contact. The homepage keeps its own shorter invitation (`contact` below);
  * this is the page someone lands on when they have already decided to write.
  */
