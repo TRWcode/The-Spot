@@ -278,8 +278,13 @@ export const testimonial = {
  */
 export const reviewPage = {
   eyebrow: "Review",
-  title: "Hoe was het om met ons te werken?",
-  lead: "Een paar zinnen zijn genoeg. Van iemand die het al met ons deed weegt het zwaarder dan alles wat wij over onszelf kunnen zeggen.",
+  title: "Hoe was het?",
+  /**
+   * "Goed of slecht" staat er niet uit bescheidenheid. Alleen de tevreden
+   * klanten om een review vragen heet review gating en is bij Google verboden;
+   * de vraag hoort open te staan, en zo gesteld levert hij ook eerlijker werk.
+   */
+  lead: "Een paar zinnen helpen ons echt verder. Goed of slecht — liever eerlijk dan aardig.",
   cta: "Schrijf je review op Google",
   /**
    * Het Place ID staat in geen adres dat je kunt kopiëren, maar het is af te
@@ -289,13 +294,12 @@ export const reviewPage = {
    * verpakking, niet de plaats.
    */
   href: "https://search.google.com/local/writereview?placeid=ChIJf0GnvMyVrI0RHCRU2vFzXM4",
-  note: "Je schrijft hem op Google, met je eigen account. Een halve minuut werk.",
+  note: "Op Google, met je eigen account. Halve minuut werk.",
   /** Voor wie het scherm openklapt en niet weet waar te beginnen. */
-  prompts: [
-    "Waar hebben we je mee geholpen?",
-    "Hoe liep de samenwerking?",
-    "Wat zou je zeggen tegen iemand die nog twijfelt?",
-  ],
+  promptsTitle: "Geen idee wat je moet schrijven?",
+  prompts: ["Waar hielpen we je mee?", "Hoe liep het?", "Wat zou je tegen een ander zeggen?"],
+  /** De review die er al staat, hier vooral als maat: zo kort mag het dus. */
+  exampleTitle: "Zo kort mag het",
 } as const;
 
 /**

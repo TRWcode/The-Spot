@@ -49,12 +49,12 @@ export default function ReviewPage() {
           <p className="mt-5 text-[14px] text-ink-2">{reviewPage.note}</p>
         </Reveal>
 
-        {/* Twee dingen die het schrijven makkelijker maken: drie vragen om op
-            te antwoorden, en één review die er al staat zodat zichtbaar is hoe
-            kort het mag zijn. */}
+        {/* Twee dingen die het schrijven makkelijker maken: drie korte vragen
+            om op te antwoorden, en één review die er al staat zodat zichtbaar
+            is hoe kort het mag zijn. */}
         <div className="mt-20 grid gap-14 border-t border-line pt-12 md:grid-cols-2 md:gap-x-20">
           <Reveal stagger y={18}>
-            <p className="eyebrow">Weet je niet wat je moet schrijven?</p>
+            <p className="eyebrow">{reviewPage.promptsTitle}</p>
             <ul className="mt-6 flex flex-col gap-4">
               {reviewPage.prompts.map((prompt) => (
                 <li key={prompt} className="text-[17px] text-ink-2">
@@ -65,7 +65,7 @@ export default function ReviewPage() {
           </Reveal>
 
           <Reveal y={24} delay={0.1}>
-            <p className="eyebrow">Zo deed iemand het voor je</p>
+            <p className="eyebrow">{reviewPage.exampleTitle}</p>
             <figure className="mt-6">
               <blockquote className="font-display text-[21px] leading-[1.35] font-medium -tracking-[0.02em]">
                 “{testimonial.quote}”
