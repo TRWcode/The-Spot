@@ -45,9 +45,42 @@ const MOVED: Record<string, string> = {
   "/clok": "/werk/clok",
 };
 
+/**
+ * Het Place ID van de Google-vermelding, te vinden met de Place ID Finder.
+ *
+ * Leeg laten kan: dan bestaat /review gewoon niet, en dat is beter dan een
+ * kort adres dat mensen naar een kapot Google-scherm stuurt.
+ */
+const REVIEW_PLACE_ID = "";
+
 const nextConfig: NextConfig = {
   async redirects() {
     const onOldHost = [{ type: "host" as const, value: OLD_HOST }];
+
+    /**
+     * Een adres dat je kunt opnoemen aan de telefoon.
+     *
+     * Reviews komen van mensen die net een oplevering achter de rug hebben,
+     * niet van bezoekers van de site — die hebben nog nergens iets over te
+     * schrijven. Daarom geen knop op een pagina maar een kort adres dat onder
+     * een mail of in een appje past, en dat rechtstreeks het sterrenvenster
+     * van Google opent in plaats van de kaart waar je het zelf nog moet zoeken.
+     *
+     * Tijdelijk, want zodra de vermelding geclaimd is geeft Google er een eigen
+     * korte deel-link bij en verhuist de bestemming daarheen. Een permanente
+     * redirect blijft in de browser van iedereen die hem één keer volgde
+     * hangen, en dan wijst /review bij je vaste klanten voor altijd naar het
+     * oude adres.
+     */
+    const review = REVIEW_PLACE_ID
+      ? [
+          {
+            source: "/review",
+            destination: `https://search.google.com/local/writereview?placeid=${REVIEW_PLACE_ID}`,
+            permanent: false,
+          },
+        ]
+      : [];
 
     const moved = Object.entries(MOVED).map(([from, to]) => ({
       source: from,
@@ -57,6 +90,7 @@ const nextConfig: NextConfig = {
     }));
 
     return [
+      ...review,
       ...moved,
       {
         // Alles wat hierboven niet staat: oude blogposts, /wp-admin, /feed en
