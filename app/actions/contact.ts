@@ -1,9 +1,11 @@
 "use server";
 
 import { createHash } from "node:crypto";
-import { headers } from "next/headers";
+import { clientKey } from "@/lib/client-ip";
 import { site } from "@/lib/content";
 import { hit } from "@/lib/rate-limit";
+import { verifyToken } from "@/lib/form-token";
+import { assessMessage, BLOCK_SCORE, TAG_SCORE } from "@/lib/spam";
 
 /**
  * Contact form handler.
@@ -11,6 +13,12 @@ import { hit } from "@/lib/rate-limit";
  * A Server Action compiles to a public POST endpoint — anyone can call it
  * without going through the form, so every check here is server-side. The
  * client-side `required` attributes are a convenience, never a guarantee.
+ *
+ * Spam is handled in layers, none of which can reject a message on its own:
+ * the honeypot below, the rate limits, a signed token proving the form was
+ * opened (`lib/form-token.ts`), and a score for what the message says
+ * (`lib/spam.ts`). Only the sum decides, and the middle band is delivered with
+ * a marked subject rather than dropped.
  *
  * Delivery goes through Resend's REST API over plain fetch, so there is no
  * extra dependency to install or keep updated. To switch providers, replace
@@ -74,18 +82,25 @@ function str(v: FormDataEntryValue | null): string {
 }
 
 /**
- * The client address, as far as it can be trusted.
+ * What an unproven submission is worth, in the same units as `lib/spam.ts`.
  *
- * `x-forwarded-for` is a client-settable header everywhere except behind a
- * proxy that overwrites it, which Vercel does — the real address is the first
- * entry and the rest are hops. Self-hosted behind something that does not
- * rewrite it, this is spoofable and the limit degrades to honour-system.
+ * None of these blocks anything on its own, and that is the whole design.
+ * Roughly one visitor in five hundred browses without JavaScript, and this
+ * site renders fine for them; their message has to arrive. So a missing token
+ * only tips a message over the edge when the text is also asking for it.
+ *
+ * "too-fast" is weighted hardest because it is the one a person cannot
+ * produce: the clock starts when the form is first touched, and nobody types
+ * a name, an address and a message in four seconds.
  */
-async function clientKey() {
-  const h = await headers();
-  const forwarded = h.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return forwarded || h.get("x-real-ip") || "unknown";
-}
+const TOKEN_PENALTY: Record<string, number> = {
+  valid: 0,
+  unconfigured: 0,
+  expired: 1,
+  missing: 2,
+  invalid: 3,
+  "too-fast": 4,
+};
 
 function tooManyMessage(retryAfterMs: number) {
   const minutes = Math.max(1, Math.ceil(retryAfterMs / MINUTE));
@@ -182,6 +197,28 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
     return { ok: false, message: "Controleer de gemarkeerde velden.", errors, values };
   }
 
+  // How much this submission looks like spam: how it was sent, plus what it
+  // says. Judged after validation so a visitor fixing a typo is scored on the
+  // message they meant to send.
+  const verdict = verifyToken(str(formData.get("token")));
+  const penalty = TOKEN_PENALTY[verdict] ?? 0;
+  const assessment = assessMessage({ name, email, message });
+  const score = assessment.score + penalty;
+  const reasons = penalty ? [...assessment.reasons, `token: ${verdict}`] : assessment.reasons;
+
+  if (score >= BLOCK_SCORE) {
+    // Same shape as the honeypot: answered as success so a bot learns nothing
+    // from the response, and logged because this is the one branch that throws
+    // a message away. If a real enquiry ever lands here, this line is the only
+    // way anyone would find out, so it carries enough to tune the weights.
+    console.warn(
+      `[contact] Blocked as spam (score ${score}): ${reasons.join(", ")} | from ${email}`,
+    );
+    return { ok: true, message: "Bericht verstuurd. Je hoort snel van ons." };
+  }
+
+  const suspicious = score >= TAG_SCORE;
+
   // A double-click, a retried submit, or a bot replaying the same payload.
   // Answered as success because the first one did go through — telling the
   // visitor it failed would only make them send it a third time.
@@ -217,14 +254,20 @@ export async function sendContact(_prev: ContactState, formData: FormData): Prom
     };
   }
 
+  // Marked, not withheld. A borderline score is a guess, and the person best
+  // placed to settle it is the one reading the mail — with a subject they can
+  // point a mail rule at, so guessing wrong costs a folder and not a client.
   const sent = await deliver(
-    `Nieuw bericht via thespotproducties.nl — ${name}`,
+    `${suspicious ? "[MOGELIJK SPAM] " : ""}Nieuw bericht via thespotproducties.nl — ${name}`,
     [
       `Naam:     ${name}`,
       `E-mail:   ${email}`,
       `Telefoon: ${phone || "—"}`,
       "",
       message,
+      ...(suspicious
+        ? ["", "---", `Automatisch gemarkeerd als mogelijk spam: ${reasons.join(", ")}.`]
+        : []),
     ].join("\n"),
     email,
   );

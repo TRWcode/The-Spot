@@ -33,6 +33,33 @@ grote vlakken, geen gradient op tekstblokken.
 | `components/brand/SMark.tsx` | Het S-mark als échte vector (zie hieronder) |
 | `components/ui/PlayCursor.tsx` | De signature play-cursor |
 | `components/sections/` | De zeven homepage-secties, in vaste volgorde |
+| `app/actions/contact.ts` | Het contactformulier: validatie, limieten, antispam, verzending |
+| `lib/spam.ts` | Score voor wat een bericht zégt. Drempels bovenin, daar draai je aan |
+| `lib/form-token.ts` | Ondertekend token dat bewijst dat het formulier echt geopend is |
+
+## Antispam op het contactformulier
+
+Vijf lagen, en geen enkele mag op zichzelf een bericht weigeren. Een gemiste
+opdracht kost meer dan een spammail, dus twijfelgevallen worden verstuurd met
+`[MOGELIJK SPAM]` in het onderwerp in plaats van weggegooid.
+
+| Laag | Vangt |
+| --- | --- |
+| Honeypot | Bots die blind elk veld invullen |
+| Rate limits | Herhaling vanaf hetzelfde adres |
+| Dubbelcheck | Dezelfde tekst twee keer binnen tien minuten |
+| Token | Scripts die rechtstreeks posten, of binnen vier seconden klaar zijn |
+| Inhoudsscore | Wat het bericht zegt: spamwoorden, links, vreemd schrift, geen Nederlands |
+
+Er is niets in te stellen. De ondertekensleutel komt uit `FORM_SECRET` als je
+die zet, en anders uit de Resend-sleutel die er toch al moet zijn, zodat dit
+zonder extra variabele op een volgende klantsite werkt.
+
+Wat er geblokkeerd wordt staat in de serverlog met score en reden erbij. Blijkt
+een drempel verkeerd te staan, dan is dat één getal in `lib/spam.ts`.
+
+Testen: `node scripts/test-contact.mjs` tegen een dev-server **zonder**
+`RESEND_API_KEY`, anders komen de testberichten echt in de inbox.
 
 ## Twee dingen die niet vanzelfsprekend zijn
 

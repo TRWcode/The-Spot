@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useRef, useState } from "react";
 import { sendContact, type ContactState } from "@/app/actions/contact";
 import { contact } from "@/lib/content";
 
@@ -24,8 +24,43 @@ export function ContactForm({ className }: { className?: string }) {
   /** Ties an input to its error text so screen readers announce the reason. */
   const describedBy = (field: string) => (err[field] ? `${field}-error` : undefined);
 
+  /**
+   * The anti-spam token. Fetched when the visitor first touches the form
+   * rather than on mount, for two reasons: the form sits on the homepage, so
+   * on-mount would mean a request per visit for the majority who scroll past
+   * it, and the token doubles as a stopwatch. Starting that clock at first
+   * focus measures time actually spent filling in, which is the number worth
+   * knowing.
+   *
+   * A failure here is deliberately silent. No token means the action scores
+   * the submission as unproven, which on its own is never enough to stop it,
+   * so a blocked request or an offline moment costs a visitor nothing.
+   */
+  const [token, setToken] = useState("");
+  const asked = useRef(false);
+
+  const requestToken = () => {
+    if (asked.current) return;
+    asked.current = true;
+
+    fetch("/api/form-token", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (typeof data?.token === "string") setToken(data.token);
+      })
+      .catch(() => {});
+  };
+
   return (
-    <form action={formAction} className={`form-card ${className ?? ""}`}>
+    <form
+      action={formAction}
+      onFocusCapture={requestToken}
+      onPointerDown={requestToken}
+      className={`form-card ${className ?? ""}`}
+    >
+      {/* Empty until the visitor touches the form, and empty forever without
+          JavaScript. Both cases are handled server-side. */}
+      <input type="hidden" name="token" value={token} readOnly />
       {/* Honeypot. Hidden from sight and from assistive tech, and taken out of
           the tab order, so only a bot ever fills it.
 
