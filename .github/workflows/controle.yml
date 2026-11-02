@@ -1,0 +1,39 @@
+# Controle bij elke PR en elke push naar main.
+#
+# Rood betekent: niet samenvoegen. De stap die faalde zegt waarom.
+# De build doet Vercel (die heeft de env-vars); zijn preview staat als
+# tweede vinkje op dezelfde PR.
+name: Controle
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: controle-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  controle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Installeren
+        run: npm ci
+
+      - name: Types
+        run: if [ -f tsconfig.json ]; then npx tsc --noEmit; else echo "geen TypeScript"; fi
+
+      - name: Beveiligingslekken (hoog en kritiek)
+        run: npm audit --omit=dev --audit-level=high

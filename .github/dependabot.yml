@@ -1,0 +1,44 @@
+# Updates — één keer per week, gebundeld, nooit vanzelf samengevoegd.
+#
+#   maandag      één PR met alle kleine updates (patch + minor) samen
+#   los          elke grote update (major) als eigen PR — daar zitten de breuken
+#   direct       beveiligingsupdates wachten niet op maandag
+#
+# Elke PR draait .github/workflows/controle.yml. Groen = samenvoegen kan,
+# rood = laten liggen. Zie UPDATES.md.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Amsterdam
+    # Een versie moet vijf dagen bestaan voordat hij wordt voorgesteld. Een
+    # gekaapt pakket wordt meestal binnen een paar dagen ontdekt en ingetrokken.
+    # Geldt niet voor beveiligingsupdates.
+    cooldown:
+      default-days: 5
+    open-pull-requests-limit: 5
+    groups:
+      beveiliging:
+        applies-to: security-updates
+        patterns: ["*"]
+      kleine-updates:
+        applies-to: version-updates
+        update-types: [minor, patch]
+    commit-message:
+      prefix: "deps"
+    labels: [updates]
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: "ci"
+    labels: [updates]
